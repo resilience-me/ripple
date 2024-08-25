@@ -15,7 +15,7 @@ func serializePaymentDetails(payment *pathfinding.Payment, amount uint32) []byte
 }
 
 // getPaymentAndPath retrieves the Payment and Path objects associated with the given username.
-func getPaymentAndPath(username string) (*types.Payment, *types.Path, error) {
+func getPaymentAndPath(username string) (*pathfinding.Payment, *pathfinding.Path, error) {
     account := GetPathManager().Find(username)
     if account == nil {
         return nil, nil, fmt.Errorf("no account found for username: %s", username)
