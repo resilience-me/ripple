@@ -6,8 +6,8 @@ import (
     "net"
 )
 
-// SendAndReceive sends a datagram to the server, waits for an acknowledgment, and returns the server's response.
-func SendAndReceive(serverAddress string, data []byte) ([]byte, error) {
+// sendAndReceive sends a datagram to the server, waits for an acknowledgment, and returns the server's response.
+func sendAndReceive(serverAddress string, data []byte) ([]byte, error) {
     // Generate a random 4-byte identifier
     identifier := make([]byte, 4)
     if _, err := rand.Read(identifier); err != nil {
