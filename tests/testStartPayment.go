@@ -43,11 +43,7 @@ func TestStartPayment() {
 
     // **3. Start the Payment (ClientPayments_StartPayment)**
 
-    // Prepare the payment initiation arguments (the amount to be paid)
-    arguments := make([]byte, 4)
-    binary.BigEndian.PutUint32(arguments[:4], paymentAmount)
-
-    data, err := prepareAndSignDatagram(senderUsername, receiverUsername, receiverServerAddress, commands.ClientPayments_StartPayment, senderCounter+2, arguments)
+    data, err := prepareAndSignDatagram(senderUsername, receiverUsername, receiverServerAddress, commands.ClientPayments_StartPayment, senderCounter+2, nil)
     if err != nil {
         log.Fatalf("Failed to prepare StartPayment datagram for sender: %v", err)
     }
@@ -59,7 +55,7 @@ func TestStartPayment() {
 
     log.Printf("Sender StartPayment response: %s", string(response))
 
-    data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_StartPayment, receiverCounter+2, arguments)
+    data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_StartPayment, receiverCounter+2, nil)
     if err != nil {
         log.Fatalf("Failed to prepare StartPayment datagram for receiver: %v", err)
     }
