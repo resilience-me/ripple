@@ -5,14 +5,14 @@ import (
 
     "ripple/commands"
     "ripple/comm"
-    "ripple/handlers"
+    "ripple/handler_util"
     "ripple/types"
 )
 
 // SyncTrustlineIn handles the client request to sync the inbound trustline from the peer server.
 func SyncTrustlineIn(session types.Session) {
     // Instantiate a DatagramHelper using the NewDatagramHelper function
-    dh := handlers.NewDatagramHelper(session.Datagram)
+    dh := handler_util.NewDatagramHelper(session.Datagram)
 
     // Prepare, sign, and send the datagram using the DatagramHelper
     if err := dh.PrepareAndSendDatagram(commands.ServerTrustlines_GetTrustline, nil); err != nil {
