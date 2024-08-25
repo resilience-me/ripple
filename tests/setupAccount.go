@@ -4,7 +4,6 @@ import (
     "fmt"
     "os"
     "ripple/database"
-    "ripple/database/db_trustlines"
 )
 
 // SetupAccount initializes the account directory with counters and a secret key.
