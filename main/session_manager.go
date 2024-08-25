@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"sync"
+	"ripple/auth"
 	"ripple/comm"
 	"ripple/types"
 )
@@ -74,7 +75,7 @@ func (sm *SessionManager) handleSession(session *types.Session) {
 	// If this is a client connection, check that peer account exists
 	// But only if the command included a peer.
 	if command&0x80 == 0 && datagram.PeerUsername != "" { // Bit 7 (MSB) is 0
-	    if errorMessage, err := validatePeerExists(datagram); err != nil {
+	    if errorMessage, err := auth.ValidatePeerExists(datagram); err != nil {
 	        log.Printf("Error validating peer existence for user %s: %v", username, err)
 	        comm.SendErrorResponse(session.Addr, errorMessage)
 	        return
