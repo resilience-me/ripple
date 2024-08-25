@@ -1,9 +1,8 @@
-package main
+package auth
 
 import (
 	"errors"
 	"fmt"
-	"ripple/auth"
 	"ripple/types"
 	"ripple/database"
 )
@@ -13,9 +12,9 @@ var (
 	ErrSignatureVerificationFailed = errors.New("signature verification failed")
 )
 
-// validatePeerExists checks for the existence of user and peer directories
+// ValidatePeerExists checks for the existence of user and peer directories
 // It returns an error message string (empty if successful) and an error object for detailed information if an error occurs.
-func validatePeerExists(dg *types.Datagram) (string, error) {
+func ValidatePeerExists(dg *types.Datagram) (string, error) {
 	exists, err := database.CheckPeerExists(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
 	if err != nil {
 		return "Error checking peer existence", fmt.Errorf("error checking peer existence for server '%s' and user '%s': %v", dg.PeerServerAddress, dg.PeerUsername, err)
@@ -60,12 +59,12 @@ func validateAndIncrementServerCounter(datagram *types.Datagram) error {
 
 // validateClientDatagram validates the client datagram and checks the counter
 func validateClientDatagram(buf []byte, dg *types.Datagram) error {
-	secretKey, err := auth.LoadClientSecretKey(dg)
+	secretKey, err := auth.loadClientSecretKey(dg)
 	if err != nil {
 		return fmt.Errorf("loading client secret key failed: %w", err)
 	}
 
-	if !auth.VerifySignature(buf, secretKey) {
+	if !auth.verifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
@@ -79,12 +78,12 @@ func validateClientDatagram(buf []byte, dg *types.Datagram) error {
 
 // validateServerDatagram validates the server datagram and checks the counter
 func validateServerDatagram(buf []byte, dg *types.Datagram) error {
-	secretKey, err := auth.LoadServerSecretKey(dg)
+	secretKey, err := auth.loadServerSecretKey(dg)
 	if err != nil {
 		return fmt.Errorf("loading server secret key failed: %w", err)
 	}
 
-	if !auth.VerifySignature(buf, secretKey) {
+	if !auth.verifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
@@ -96,8 +95,8 @@ func validateServerDatagram(buf []byte, dg *types.Datagram) error {
 	return nil
 }
 
-// validateDatagram validates a datagram based on whether it's for a client or server session.
-func validateDatagram(buf []byte, dg *types.Datagram) error {
+// ValidateDatagram validates a datagram based on whether it's for a client or server session.
+func ValidateDatagram(buf []byte, dg *types.Datagram) error {
 	if dg.Command&0x80 == 0 { // Client session if MSB is 0
 		return validateClientDatagram(buf, dg)
 	} else { // Server session if MSB is 1
