@@ -69,7 +69,7 @@ func TestNewPayments() {
     // **3. Verify Payment Registration Using GetPayment**
 
     // Prepare and sign the GetPayment datagram for the sender
-    data, err = prepareAndSignDatagram(senderUsername, receiverUsername, receiverServerAddress, commands.ClientPayments_GetPaymentOut, senderCounter+1, arguments)
+    data, err = prepareAndSignDatagram(senderUsername, receiverUsername, receiverServerAddress, commands.ClientPayments_GetPayment, senderCounter+1, arguments)
     if err != nil {
         log.Fatalf("Failed to prepare GetPayment datagram for sender: %v", err)
     }
@@ -83,7 +83,7 @@ func TestNewPayments() {
     log.Printf("GetPayment response for sender: %s", string(response))
 
     // Prepare and sign the GetPayment datagram for the receiver
-    data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_GetPaymentIn, receiverCounter+1, arguments)
+    data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_GetPayment, receiverCounter+1, arguments)
     if err != nil {
         log.Fatalf("Failed to prepare GetPayment datagram for receiver: %v", err)
     }
