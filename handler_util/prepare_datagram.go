@@ -2,13 +2,14 @@ package handler_util
 
 import (
     "fmt"
+    "ripple/auth"
     "ripple/types"
 )
 
 // PrepareDatagramWithoutCommand prepares common Datagram fields and increments counter_out.
 func PrepareDatagramWithoutCommand(username, peerServerAddress, peerUsername string) (*types.Datagram, error) {
     // Retrieve and increment the counter_out value
-    counterOut, err := GetAndIncrementCounterOut(username, peerServerAddress, peerUsername)
+    counterOut, err := auth.GetAndIncrementCounterOut(username, peerServerAddress, peerUsername)
     if err != nil {
         return nil, fmt.Errorf("error handling counter_out for user %s: %v", username, err)
     }
