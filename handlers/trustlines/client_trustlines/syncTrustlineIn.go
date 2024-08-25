@@ -23,17 +23,7 @@ func SyncTrustlineIn(session types.Session) {
         return
     }
 
-    // Retrieve the current sync_in value
-    syncIn, err := db_trustlines.GetSyncIn(datagram)
-    if err != nil {
-        log.Printf("Error getting sync_in for user %s: %v", datagram.Username, err)
-        comm.SendErrorResponse(session.Addr, "Failed to read sync_in value.")
-        return
-    }
-
     dgOut.Command = commands.ServerTrustlines_GetTrustline
-    // Include the sync_in value in the datagram's Arguments[0:4]
-    binary.BigEndian.PutUint32(dgOut.Arguments[0:4], syncIn)
 
     // Send the GetTrustline command to the peer server
     if err := comm.SignAndSendDatagram(dgOut, datagram.PeerServerAddress); err != nil {
