@@ -21,7 +21,7 @@ func loadServerSecretKey(dg *types.Datagram) ([]byte, error) {
 
 // GenerateSignature generates a SHA-256 hash for the given datagram using the provided key.
 func GenerateSignature(data []byte, secretKey []byte) []byte {
-    // Create a temporary slice to hold the concatenated data (buf without the last 32 bytes) and the secret key.
+    // Create a temporary slice to hold the concatenated data (without the last 32 bytes) and the secret key.
     preimage := make([]byte, len(data)) // Allocate slice with the length of buf
 
     // Copy the data (excluding the last 32 bytes) into the preimage.
