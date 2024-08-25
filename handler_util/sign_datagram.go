@@ -3,6 +3,7 @@ package handler_util
 import (
     "fmt"
     "ripple/types"
+    "ripple/database"
 )
 
 func loadServerSecretKeyOut(dg *types.Datagram, peerServerAddress string) ([]byte, error) {
