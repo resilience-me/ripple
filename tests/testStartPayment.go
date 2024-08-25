@@ -1,8 +1,10 @@
 package tests
 
 import (
+    "encoding/binary"
     "fmt"
     "log"
+    "ripple/commands"
     "ripple/config"
 )
 
