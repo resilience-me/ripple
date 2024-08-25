@@ -21,6 +21,7 @@ var commandHandlers = [256]CommandHandler{
     5:   client_payments.NewPaymentOut,      // Client Command
     6:   client_payments.NewPaymentIn,       // Client Command
     7:   client_payments.GetPayment,         // Client Command
+    8:   client_payments.StartPayment,       // Client Command
 
     127: server_trustlines.SetTrustline,     // Server Command
     128: server_trustlines.GetTrustline,     // Server Command
