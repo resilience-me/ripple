@@ -3,6 +3,7 @@ package client_payments
 import (
     "log"
     "ripple/comm"
+    "ripple/payment_operations"
     "ripple/pathfinding"
     "ripple/types"
 )
@@ -23,7 +24,7 @@ func StartPayment(session types.Session) {
     // Extract payment details
     paymentDetails := account.Payment
 
-    // Initiate pathfinding using StartFindPath
+    // Initiate pathfinding using StartFindPath from payment_operations
     err := payment_operations.StartFindPath(paymentDetails)
     if err != nil {
         log.Printf("Pathfinding failed for user %s: %v", username, err)
