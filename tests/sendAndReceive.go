@@ -2,9 +2,7 @@ package tests
 
 import (
     "crypto/rand"
-    "encoding/binary"
     "fmt"
-    "log"
     "net"
 )
 
