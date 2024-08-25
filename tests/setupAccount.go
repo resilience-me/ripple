@@ -4,6 +4,7 @@ import (
     "fmt"
     "os"
     "ripple/database"
+    "ripple/database/db_trustlines"
 )
 
 // SetupAccount initializes the account and peer directories with default values.
@@ -26,7 +27,7 @@ func SetupAccount(username, peerUsername, peerServerAddress, secretKey string) e
     if err := database.SetCounterOut(username, peerServerAddress, peerUsername, 0); err != nil {
         return fmt.Errorf("failed to set counter_out: %w", err)
     }
-    if err := database.SetTrustlineOut(username, peerServerAddress, peerUsername, 0); err != nil {
+    if err := db_trustlines.SetTrustlineOut(username, peerServerAddress, peerUsername, 0); err != nil {
         return fmt.Errorf("failed to set trustline_out: %w", err)
     }
 
