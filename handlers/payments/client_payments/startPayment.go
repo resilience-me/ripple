@@ -31,18 +31,14 @@ func StartPayment(session types.Session) {
     }
 
     // Initiate pathfinding using StartFindPath from payment_operations
-    err := payment_operations.StartFindPath(username, paymentDetails.Identifier, path.Amount, paymentDetails.InOrOut)
-    if err != nil {
-        log.Printf("Pathfinding failed for user %s: %v", username, err)
-        if err := comm.SendErrorResponse(session.Addr, "Failed to start payment due to pathfinding error."); err != nil {
-            log.Printf("Failed to send error response for user %s: %v", username, err)
-        }
-        return
-    }
+    payment_operations.StartFindPath(username, paymentDetails.Identifier, path.Amount, paymentDetails.InOrOut)
+
+    log.Printf("Payment started for user %s.", username)
 
     // Respond with success
     if err := comm.SendSuccessResponse(session.Addr, []byte("Payment started successfully.")); err != nil {
         log.Printf("Failed to send success response for user %s: %v", username, err)
+        return
     }
 
     log.Printf("Payment started successfully for user %s.", username)
