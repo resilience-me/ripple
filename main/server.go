@@ -4,7 +4,6 @@ import (
 	"log"
 	"net"
 	"sync/atomic"
-	"ripple/main/auth"
 	"ripple/comm"
 	"ripple/types"
 )
