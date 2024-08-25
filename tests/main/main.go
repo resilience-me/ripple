@@ -12,13 +12,13 @@ func main() {
         log.Fatalf("Failed to set up account: %v", err)
     }
 
-    // Map of test functions
-    testFuncs := map[int]struct {
+    // Slice of test functions with their names
+    testFuncs := []struct {
         name string
         fn   func()
     }{
-        0: {"TestTrustlineUpdate", tests.TestTrustlineUpdate},
-        1: {"TestNewPayments", tests.TestNewPayments},
+        {"TestTrustlineUpdate", tests.TestTrustlineUpdate},
+        {"TestNewPayments", tests.TestNewPayments},
         // Add more test functions here
     }
 
@@ -37,7 +37,8 @@ func main() {
     }
 
     // Run the selected test
-    if test, exists := testFuncs[choice]; exists {
+    if choice >= 0 && choice < len(testFuncs) {
+        test := testFuncs[choice]
         fmt.Printf("Running test: %s\n", test.name)
         test.fn()
     } else {
