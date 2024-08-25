@@ -8,7 +8,7 @@ import (
 // signDatagramData generates a SHA-256 hash for the given datagram using the provided key.
 func signDatagramData(data []byte, secretKey []byte) []byte {
 
-	datagramWithoutSignatureField := data[:len(data)-32]
+    datagramWithoutSignatureField := data[:len(data)-32]
 
     // Concatenate data and secret
     preimage := append(datagramWithoutSignatureField, secretKey...)
