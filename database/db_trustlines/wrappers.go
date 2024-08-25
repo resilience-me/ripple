@@ -2,23 +2,23 @@ package db_trustlines
 
 import "ripple/types"
 
-// GetTrustlineOutFromDatagram retrieves the outbound trustline using fields from datagram
-func GetTrustlineOutFromDatagram(dg *types.Datagram) (uint32, error) {
+// GetTrustlineOutWithDatagram retrieves the outbound trustline using fields from datagram
+func GetTrustlineOutWithDatagram(dg *types.Datagram) (uint32, error) {
 	return GetTrustlineOut(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
 }
 
-// GetTrustlineInFromDatagram retrieves the inbound trustline using fields from datagram
-func GetTrustlineInFromDatagram(dg *types.Datagram) (uint32, error) {
+// GetTrustlineInWithDatagram retrieves the inbound trustline using fields from datagram
+func GetTrustlineInWithDatagram(dg *types.Datagram) (uint32, error) {
 	return GetTrustlineIn(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
 }
 
-// SetTrustlineOutFromDatagram sets the outbound trustline amount using fields from datagram
-func SetTrustlineOutFromDatagram(dg *types.Datagram, value uint32) error {
+// SetTrustlineOutWithDatagram sets the outbound trustline amount using fields from datagram
+func SetTrustlineOutWithDatagram(dg *types.Datagram, value uint32) error {
 	return SetTrustlineOut(dg.Username, dg.PeerServerAddress, dg.PeerUsername, value)
 }
 
-// SetTrustlineInFromDatagram sets the inbound trustline amount using fields from datagram
-func SetTrustlineInFromDatagram(dg *types.Datagram, value uint32) error {
+// SetTrustlineInWithDatagram sets the inbound trustline amount using fields from datagram
+func SetTrustlineInWithDatagram(dg *types.Datagram, value uint32) error {
 	return SetTrustlineIn(dg.Username, dg.PeerServerAddress, dg.PeerUsername, value)
 }
 
