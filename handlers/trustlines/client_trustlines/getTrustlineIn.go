@@ -4,18 +4,19 @@ import (
     "log"
 
     "ripple/comm"
-    "ripple/database/db_trustlines"
+    "ripple/handlers"
     "ripple/types"
 )
 
 // GetTrustlineIn handles fetching the inbound trustline information
 func GetTrustlineIn(session types.Session) {
-    datagram := session.Datagram
+    // Instantiate a DatagramHelper using the NewDatagramHelper function
+    dh := handlers.NewDatagramHelper(session.Datagram)
 
-    // Fetch the inbound trustline
-    trustline, err := db_trustlines.GetTrustlineInWithDatagram(datagram)
+    // Fetch the inbound trustline using DatagramHelper
+    trustline, err := dh.GetTrustlineIn()
     if err != nil {
-        log.Printf("Error reading inbound trustline for user %s: %v", datagram.Username, err)
+        log.Printf("Error reading inbound trustline for user %s: %v", dh.Datagram.Username, err)
         comm.SendErrorResponse(session.Addr, "Error reading inbound trustline.")
         return
     }
@@ -25,9 +26,9 @@ func GetTrustlineIn(session types.Session) {
 
     // Send the success response back to the client
     if err := comm.SendSuccessResponse(session.Addr, responseData); err != nil {
-        log.Printf("Error sending success response to user %s: %v", datagram.Username, err)
+        log.Printf("Error sending success response to user %s: %v", dh.Datagram.Username, err)
         return
     }
 
-    log.Printf("Inbound trustline sent successfully to user %s.", datagram.Username)
+    log.Printf("Inbound trustline sent successfully to user %s.", dh.Datagram.Username)
 }
