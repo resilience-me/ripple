@@ -3,7 +3,6 @@ package database
 import (
     "os"
     "path/filepath"
-    "ripple/types"
     "ripple/config"
 )
 
@@ -41,8 +40,8 @@ func checkDirExists(dirPath string) (bool, error) {
 }
 
 // CheckPeerExists checks if the peer directory exists
-func CheckPeerExists(dg *types.Datagram) (bool, error) {
-    peerDir := GetPeerDir(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
+func CheckPeerExists(username, peerServerAddress, peerUsername string) (bool, error) {
+    peerDir := GetPeerDir(username, peerServerAddress, peerUsername)
     // Ensure the peer directory exists
     return checkDirExists(peerDir)
 }
