@@ -3,14 +3,14 @@ package payment_operations
 import (
     "log"
     "ripple/types"
-    "ripple/database/db_pathfinding"
+    "ripple/pathfinding"
     "ripple/handlers/payments"
 )
 
 // StartFindPath initiates a pathfinding request to all connected peers.
 func StartFindPath(username, identifier string, amount uint32, inOrOut byte) {
     // Retrieve the list of connected peers
-    peers, err := db_pathfinding.GetPeers(username)
+    peers, err := pathfinding.GetPeers(username)
     if err != nil {
         log.Printf("Failed to retrieve peers for user %s: %v", username, err)
         return
