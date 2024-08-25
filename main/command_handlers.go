@@ -24,10 +24,8 @@ var commandHandlers = [256]CommandHandler{
 
     127: server_trustlines.SetTrustline,     // Server Command
     128: server_trustlines.GetTrustline,     // Server Command
-    129: server_trustlines.SetSyncOut,       // Server Command
-    130: server_trustlines.SetTimestamp,     // Server Command
-    131: server_payments.FindPathOut,        // Server Command
-    132: server_payments.FindPathIn    ,     // Server Command
-    133: server_payments.PathRecurse  ,      // Server Command
+    129: server_payments.FindPathOut,        // Server Command
+    130: server_payments.FindPathIn    ,     // Server Command
+    131: server_payments.PathRecurse  ,      // Server Command
     // Other indices are nil by default
 }
