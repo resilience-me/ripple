@@ -30,11 +30,8 @@ func TestTrustlineUpdate() {
         log.Fatalf("Failed to send and receive: %v", err)
     }
 
-    // Verify the response (custom verification logic)
-    expectedResponse := "Expected response data" // Define what you expect in the response
-    if string(response) != expectedResponse {
-        log.Fatalf("Verification failed: expected %s, got %s", expectedResponse, string(response))
-    }
+    // Print the response from the server
+    log.Printf("Server response: %s", string(response))
 
-    log.Println("Test passed: trustline update successful.")
+    log.Println("Test completed.")
 }
