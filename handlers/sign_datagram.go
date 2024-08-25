@@ -5,6 +5,10 @@ import (
     "ripple/types"
 )
 
+func loadServerSecretKeyOut(dg *types.Datagram, peerServerAddress string) ([]byte, error) {
+    return database.LoadPeerSecretKey(dg.PeerUsername, peerServerAddress, dg.Username)
+}
+
 // generateSignature generates a SHA-256 hash for the given datagram using the provided key.
 func generateSignature(datagram []byte, secretKey []byte) []byte {
 
