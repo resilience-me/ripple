@@ -42,7 +42,7 @@ func loadServerAddress() error {
     }
     
     // Remove trailing newlines that might be added by text editors
-    serverAddress := strings.TrimSpace(string(addressBytes))
+    serverAddress = strings.TrimSpace(string(addressBytes))
     
     log.Printf("Loaded server address: %s", serverAddress) // Log that the address was loaded
     return nil
