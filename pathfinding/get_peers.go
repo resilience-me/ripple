@@ -1,7 +1,7 @@
 package pathfinding
 
 import (
-	"ripple/db_pathfinding"
+	"ripple/database/db_pathfinding"
 )
 
 // GetPeers retrieves a list of all peer accounts for a given username.
