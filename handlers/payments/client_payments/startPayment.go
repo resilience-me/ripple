@@ -27,7 +27,7 @@ func StartPayment(session types.Session) {
     // Find the Path using the identifier in the Payment
     path := account.Find(account.Payment.Identifier)
     if path == nil {
-        return nil // Return nil if no Path is found for the payment
+        return
     }
 
     // Initiate pathfinding using StartFindPath from payment_operations
