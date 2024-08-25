@@ -6,7 +6,6 @@ import (
     "log"
     "ripple/commands"
     "ripple/config"
-    "ripple/database"
 )
 
 func TestNewPayments() {
