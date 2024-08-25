@@ -9,7 +9,6 @@ import (
 )
 
 func TestNewPayments() {
-    // Set the parameters for the test
     senderUsername := "testsender"
     receiverUsername := "testreceiver"
     senderServerAddress := "127.0.0.1"
@@ -26,61 +25,27 @@ func TestNewPayments() {
         log.Fatalf("Failed to set up receiver account: %v", err)
     }
 
-    // Prepare the arguments (the amount to be paid)
-    arguments := make([]byte, 4)
-    binary.BigEndian.PutUint32(arguments[:4], paymentAmount)
-
     // Hardcoded server address using the config port
     serverAddress := fmt.Sprintf("127.0.0.1:%d", config.Port)
     log.Printf("Using server address: %s", serverAddress) // Debugging line
 
-    // **1. Sender Initiates Payment**
-
-    // Prepare and sign the payment datagram for the sender
-    data, err := prepareAndSignDatagram(senderUsername, receiverUsername, receiverServerAddress, commands.ClientPayments_NewPaymentOut, senderCounter, arguments)
-    if err != nil {
-        log.Fatalf("Failed to prepare payment datagram for sender: %v", err)
+    // Initiate the payment process
+    if err := InitiatePayment(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, serverAddress, paymentAmount, senderCounter, receiverCounter); err != nil {
+        log.Fatalf("Payment initiation failed: %v", err)
     }
-
-    // Send the datagram and receive the response
-    response, err := sendAndReceive(serverAddress, data)
-    if err != nil {
-        log.Fatalf("Failed to send and receive for sender: %v", err)
-    }
-
-    log.Printf("Sender response: %s", string(response))
-
-    // **2. Receiver Initiates Payment**
-
-    // Prepare and sign the payment datagram for the receiver
-    data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_NewPaymentIn, receiverCounter, arguments)
-    if err != nil {
-        log.Fatalf("Failed to prepare payment datagram for receiver: %v", err)
-    }
-
-    // Send the datagram and receive the response
-    response, err = sendAndReceive(serverAddress, data)
-    if err != nil {
-        log.Fatalf("Failed to send and receive for receiver: %v", err)
-    }
-
-    log.Printf("Receiver response: %s", string(response))
 
     // **3. Verify Payment Registration Using GetPayment**
 
-    // Prepare and sign the GetPayment datagram for the sender
-    data, err = prepareAndSignDatagram(senderUsername, receiverUsername, receiverServerAddress, commands.ClientPayments_GetPayment, senderCounter+1, arguments)
+    data, err := prepareAndSignDatagram(senderUsername, receiverUsername, receiverServerAddress, commands.ClientPayments_GetPayment, senderCounter+1, nil)
     if err != nil {
         log.Fatalf("Failed to prepare GetPayment datagram for sender: %v", err)
     }
 
-    // Send the GetPayment datagram and receive the response
-    response, err = sendAndReceive(serverAddress, data)
+    response, err := sendAndReceive(serverAddress, data)
     if err != nil {
         log.Fatalf("Failed to send and receive GetPayment for sender: %v", err)
     }
 
-    // Use parsePaymentResponse to handle the GetPayment response
     paymentDetails, err := parsePaymentResponse(response)
     if err != nil {
         log.Fatalf("Failed to parse GetPayment response for sender: %v", err)
@@ -88,19 +53,16 @@ func TestNewPayments() {
 
     log.Printf("GetPayment response for sender: %s", paymentDetails)
 
-    // Prepare and sign the GetPayment datagram for the receiver
-    data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_GetPayment, receiverCounter+1, arguments)
+    data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_GetPayment, receiverCounter+1, nil)
     if err != nil {
         log.Fatalf("Failed to prepare GetPayment datagram for receiver: %v", err)
     }
 
-    // Send the GetPayment datagram and receive the response
     response, err = sendAndReceive(serverAddress, data)
     if err != nil {
         log.Fatalf("Failed to send and receive GetPayment for receiver: %v", err)
     }
 
-    // Use parsePaymentResponse to handle the GetPayment response
     paymentDetails, err = parsePaymentResponse(response)
     if err != nil {
         log.Fatalf("Failed to parse GetPayment response for receiver: %v", err)
@@ -108,6 +70,5 @@ func TestNewPayments() {
 
     log.Printf("GetPayment response for receiver: %s", paymentDetails)
 
-    // The test passes if both the sender and receiver successfully initiate the payment
     log.Println("Test passed: both sender and receiver initiated the payment successfully.")
 }
