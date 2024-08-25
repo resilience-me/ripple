@@ -15,20 +15,9 @@ import (
 func SyncTrustlineIn(session types.Session) {
     datagram := session.Datagram
 
-    // Prepare the datagram
-    dgOut, err := handlers.PrepareDatagramResponse(datagram)
-    if err != nil {
-        log.Printf("Error preparing datagram for user %s: %v", datagram.Username, err)
-        comm.SendErrorResponse(session.Addr, "Error preparing datagram.")
-        return
-    }
-
-    dgOut.Command = commands.ServerTrustlines_GetTrustline
-
-    // Send the GetTrustline command to the peer server
-    if err := comm.SignAndSendDatagram(dgOut, datagram.PeerServerAddress); err != nil {
-        log.Printf("Failed to send GetTrustline command for user %s to peer %s: %v", datagram.Username, datagram.PeerUsername, err)
-        comm.SendErrorResponse(session.Addr, "Failed to send GetTrustline command.")
+    // Prepare, sign, and send the datagram using the helper function from the handlers package
+    if err := handlers.PrepareAndSendDatagram(commands.ServerTrustlines_GetTrustline, datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, arguments); err != nil {
+        log.Printf("Failed to prepare and send GetTrustline command from %s to peer %s at server %s: %v", datagram.Username, datagram.PeerUsername, datagram.PeerServerAddress, err)
         return
     }
 
