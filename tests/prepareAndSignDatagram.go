@@ -6,21 +6,21 @@ import (
     "ripple/types"
 )
 
-// prepareAndSignDatagram prepares a datagram based on the test case and signs it.
-func prepareAndSignDatagram(tc *TestCase) ([]byte, error) {
+// prepareAndSignDatagram prepares a datagram based on the provided parameters and signs it.
+func PrepareAndSignDatagram(username, peerUsername, peerServerAddress string, command byte, counter uint32, arguments []byte) ([]byte, error) {
     dg := &types.Datagram{
-        Command:           tc.Command,
-        Username:          tc.Username,
-        PeerUsername:      tc.PeerUsername,
-        PeerServerAddress: tc.PeerServerAddress,
-        Counter:           tc.Counter,
+        Command:           command,
+        Username:          username,
+        PeerUsername:      peerUsername,
+        PeerServerAddress: peerServerAddress,
+        Counter:           counter,
     }
 
     // Copy the Arguments into the Datagram
-    copy(dg.Arguments[:], tc.Arguments)
+    copy(dg.Arguments[:], arguments)
 
     // Load the client's secret key for signing
-    secretKey, err := database.LoadSecretKey(tc.Username)
+    secretKey, err := database.LoadSecretKey(username)
     if err != nil {
         return nil, err
     }
