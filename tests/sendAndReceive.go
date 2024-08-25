@@ -69,5 +69,6 @@ func sendAndReceive(serverAddress string, data []byte) ([]byte, error) {
 
     fmt.Printf("Sent acknowledgment for server response: %x\n", responseID)
 
-    return response, nil
+    // Return only the actual response, excluding the identifier
+    return response[4:], nil
 }
