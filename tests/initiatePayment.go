@@ -7,7 +7,7 @@ import (
     "ripple/commands"
 )
 
-func InitiatePayment(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, serverAddress string, paymentAmount, senderCounter, receiverCounter uint32) error {
+func initiatePayment(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, serverAddress string, paymentAmount, senderCounter, receiverCounter uint32) error {
     // Prepare the arguments (the amount to be paid)
     arguments := make([]byte, 4)
     binary.BigEndian.PutUint32(arguments[:4], paymentAmount)
