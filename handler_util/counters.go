@@ -1,7 +1,6 @@
 package handler_util
 
 import (
-	"fmt"
 	"ripple/database"
 )
 
