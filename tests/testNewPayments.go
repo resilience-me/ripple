@@ -79,7 +79,13 @@ func TestNewPayments() {
         log.Fatalf("Failed to send and receive GetPayment for sender: %v", err)
     }
 
-    log.Printf("GetPayment response for sender: %s", string(response))
+    // Use parsePaymentResponse to handle the GetPayment response
+    username, serverAddress, paymentDirection, amount, nonce, err := parsePaymentResponse(response)
+    if err != nil {
+        log.Fatalf("Failed to parse GetPayment response for sender: %v", err)
+    }
+
+    log.Printf("GetPayment response for sender: Username: %s, Server Address: %s, Payment Direction: %d, Amount: %d, Nonce: %d", username, serverAddress, paymentDirection, amount, nonce)
 
     // Prepare and sign the GetPayment datagram for the receiver
     data, err = prepareAndSignDatagram(receiverUsername, senderUsername, senderServerAddress, commands.ClientPayments_GetPayment, receiverCounter+1, arguments)
@@ -93,7 +99,13 @@ func TestNewPayments() {
         log.Fatalf("Failed to send and receive GetPayment for receiver: %v", err)
     }
 
-    log.Printf("GetPayment response for receiver: %s", string(response))
+    // Use parsePaymentResponse to handle the GetPayment response
+    username, serverAddress, paymentDirection, amount, nonce, err = parsePaymentResponse(response)
+    if err != nil {
+        log.Fatalf("Failed to parse GetPayment response for receiver: %v", err)
+    }
+
+    log.Printf("GetPayment response for receiver: Username: %s, Server Address: %s, Payment Direction: %d, Amount: %d, Nonce: %d", username, serverAddress, paymentDirection, amount, nonce)
 
     // The test passes if both the sender and receiver successfully initiate the payment
     log.Println("Test passed: both sender and receiver initiated the payment successfully.")
