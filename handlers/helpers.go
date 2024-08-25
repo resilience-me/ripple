@@ -2,7 +2,6 @@ package handlers
 
 import (
     "fmt"
-    "ripple/comm"
     "ripple/types"
 )
 
@@ -41,7 +40,7 @@ func PrepareAndSendDatagram(command byte, username, serverAddress, peerUsername 
     }
 
     // Sign and send the datagram to the target peer
-    if err := comm.SignAndSendDatagram(newDatagram, serverAddress); err != nil {
+    if err := SignAndSendDatagram(newDatagram, serverAddress); err != nil {
         return fmt.Errorf("Failed to sign and send datagram to %s at %s: %v", peerUsername, serverAddress, err)
     }
 
