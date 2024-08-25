@@ -7,9 +7,9 @@ import (
 	"ripple/udpr"
 )
 
-// SendWithAddress sends data to a specified UDP address with retry logic.
+// sendWithAddress sends data to a specified UDP address with retry logic.
 // It handles the creation and closure of the UDP connection internally.
-func SendWithAddress(addr *net.UDPAddr, data []byte, maxRetries int) error {
+func sendWithAddress(addr *net.UDPAddr, data []byte, maxRetries int) error {
 	// Create a UDP connection with an ephemeral local port
 	conn, err := net.DialUDP("udp", nil, addr)
 	if err != nil {
@@ -25,8 +25,8 @@ func SendWithAddress(addr *net.UDPAddr, data []byte, maxRetries int) error {
 	return nil
 }
 
-// SendWithResolvedAddressAndConn resolves the address, creates a new UDP connection, and sends data with retries.
-func SendWithResolvedAddress(address string, data []byte, maxRetries int) error {
+// sendWithResolvedAddressAndConn resolves the address, creates a new UDP connection, and sends data with retries.
+func sendWithResolvedAddress(address string, data []byte, maxRetries int) error {
 	// Resolve the destination address to a UDP address
 	addr, err := net.ResolveUDPAddr("udp", fmt.Sprintf("%s:%d", address, config.Port))
 	if err != nil {
