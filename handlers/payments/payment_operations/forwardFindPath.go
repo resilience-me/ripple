@@ -4,7 +4,7 @@ import (
     "encoding/binary"
     "log"
     "ripple/types"
-    "ripple/database/pathfinding"
+    "ripple/pathfinding"
 )
 
 // ForwardFindPath forwards the pathfinding request to all connected peers
