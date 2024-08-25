@@ -33,11 +33,6 @@ func PrepareDatagram(command byte, username, peerServerAddress, peerUsername str
     return datagram, nil
 }
 
-// PrepareDatagramWithDatagram calls PrepareDatagram with fields from an incoming datagram
-func PrepareDatagramWithDatagram(datagram *types.Datagram) (*types.Datagram, error) {
-    return PrepareDatagramWithoutCommand(datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername)
-}
-
 // PrepareAndSendDatagram prepares, signs, and sends a datagram to a specified peer.
 func PrepareAndSendDatagram(command byte, username, serverAddress, peerUsername string, arguments []byte) error {
     // Prepare the datagram with the command and arguments
@@ -52,6 +47,11 @@ func PrepareAndSendDatagram(command byte, username, serverAddress, peerUsername 
     }
 
     return nil
+}
+
+// PrepareDatagramWithDatagram calls PrepareDatagram with fields from an incoming datagram
+func PrepareDatagramWithDatagram(datagram *types.Datagram) (*types.Datagram, error) {
+    return PrepareDatagramWithoutCommand(datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername)
 }
 
 // PrepareAndSendDatagramWithDatagram calls PrepareAndSendDatagram with with fields from an incoming datagram
