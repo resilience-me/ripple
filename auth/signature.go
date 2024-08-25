@@ -37,11 +37,12 @@ func GenerateSignature(data []byte, secretKey []byte) []byte {
 // verifySignature checks the integrity of the received buffer
 func verifySignature(data []byte, key []byte) bool {
     // The signature is the last 32 bytes of the buffer
-    signature := data[len(data)-32:]
+    signature := make([]byte, 32)
+    copy(signature, data[len(data)-32:])
 
     // Generate the expected signature using the GenerateSignature method
     expectedSignature := GenerateSignature(data, key)
 
-    // Compare the computed hash with the signature directly using bytes.Equal
+    // Compare the signature with the expected signature directly using bytes.Equal
     return bytes.Equal(signature, expectedSignature)
 }
