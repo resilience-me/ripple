@@ -13,7 +13,7 @@ func SerializeDatagram(dg *Datagram) ([]byte, error) {
     copy(data[33:], dg.PeerUsername)
     copy(data[65:], dg.PeerServerAddress)
 
-    // Copy Arguments (assuming Arguments is located at offset 357 and is 4 bytes long)
+    // Copy Arguments
     copy(data[357:], dg.Arguments[:])
 
     // Write the Counter
