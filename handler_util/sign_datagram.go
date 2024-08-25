@@ -24,8 +24,8 @@ func SignDatagram(dg *types.Datagram, peerServerAddress string) ([]byte, error) 
     // Generate signature for the serialized data
     signature := auth.GenerateSignature(serializedData, secretKey)
 
-    // Update the datagram's signature field with the generated signature
-    copy(dg.Signature[:], []byte(signature)) // Ensure we copy the signature into the byte array
+    // Update the serialized datagram's signature field with the generated signature
+    copy(serializedData[357:389], signature) // Ensure we copy the signature into the byte array
 
     // Return the serialized data including the signature
     return serializedData, nil
