@@ -15,7 +15,7 @@ func SetTrustline(session types.Session) {
     trustlineAmount := types.BytesToUint32(datagram.Arguments[:4])
 
     // Update the trustline and timestamp
-    if err := db_trustlines.SetTrustlineInFromDatagram(datagram, trustlineAmount); err != nil {
+    if err := db_trustlines.SetTrustlineInWithDatagram(datagram, trustlineAmount); err != nil {
         log.Printf("Error writing trustline to file for user %s: %v", datagram.Username, err)
         return
     }
