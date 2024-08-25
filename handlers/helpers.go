@@ -53,3 +53,8 @@ func PrepareAndSendDatagram(command byte, username, serverAddress, peerUsername 
 
     return nil
 }
+
+// PrepareAndSendDatagramWithDatagram calls PrepareAndSendDatagram with user identifiers taken from a Datagram
+func PrepareAndSendDatagramWithDatagram(datagram *types.Datagram, command byte, arguments []byte) error {
+    return PrepareAndSendDatagram(command, datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, arguments)
+}
