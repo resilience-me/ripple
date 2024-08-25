@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"ripple/auth"
 	"ripple/types"
 	"ripple/database"
 )
@@ -59,12 +60,12 @@ func validateAndIncrementServerCounter(datagram *types.Datagram) error {
 
 // validateClientDatagram validates the client datagram and checks the counter
 func validateClientDatagram(buf []byte, dg *types.Datagram) error {
-	secretKey, err := loadClientSecretKey(dg)
+	secretKey, err := auth.LoadClientSecretKey(dg)
 	if err != nil {
 		return fmt.Errorf("loading client secret key failed: %w", err)
 	}
 
-	if !verifySignature(buf, secretKey) {
+	if !auth.VerifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
@@ -78,12 +79,12 @@ func validateClientDatagram(buf []byte, dg *types.Datagram) error {
 
 // validateServerDatagram validates the server datagram and checks the counter
 func validateServerDatagram(buf []byte, dg *types.Datagram) error {
-	secretKey, err := loadServerSecretKey(dg)
+	secretKey, err := auth.LoadServerSecretKey(dg)
 	if err != nil {
 		return fmt.Errorf("loading server secret key failed: %w", err)
 	}
 
-	if !verifySignature(buf, secretKey) {
+	if !auth.VerifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
