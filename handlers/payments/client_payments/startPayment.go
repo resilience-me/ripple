@@ -12,21 +12,12 @@ import (
 func StartPayment(session types.Session) {
     username := session.Datagram.Username
 
-    // Inline check for the existence of a registered payment
-    account := pathfinding.GetPathManager().Find(username)
-    if account == nil || account.Payment == nil {
+    // Extract payment details
+    identifier, amount, inOrOut, err := GetPaymentDetails()
+    if err != nil {
         if err := comm.SendErrorResponse(session.Addr, "Payment not registered or missing payment details."); err != nil {
             log.Printf("Failed to send error response for user %s: %v", username, err)
         }
-        return
-    }
-
-    // Extract payment details
-    paymentDetails := account.Payment
-
-    // Find the Path using the identifier in the Payment
-    path := account.Find(account.Payment.Identifier)
-    if path == nil {
         return
     }
 
@@ -40,6 +31,5 @@ func StartPayment(session types.Session) {
         log.Printf("Failed to send success response for user %s: %v", username, err)
         return
     }
-
-    log.Printf("Payment started successfully for user %s.", username)
+    log.Printf("Sent success response to client for user %s.", username)
 }
