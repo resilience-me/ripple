@@ -14,7 +14,7 @@ func SerializeDatagram(dg *Datagram) ([]byte, error) {
     copy(data[65:], dg.PeerServerAddress)
 
     // Copy Arguments
-    copy(data[357:], dg.Arguments[:])
+    copy(data[97:], dg.Arguments[:])
 
     // Write the Counter
     binary.BigEndian.PutUint32(data[353:], dg.Counter)
