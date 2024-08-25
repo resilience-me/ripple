@@ -1,7 +1,7 @@
 package tests
 
 import (
-    "log"
+    "fmt"
     "ripple/database/db_trustlines"
 )
 
