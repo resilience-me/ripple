@@ -1,3 +1,12 @@
+package tests
+
+import (
+    "encoding/binary"
+    "fmt"
+    "log"
+    "ripple/commands"
+)
+
 func InitiatePayment(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, serverAddress string, paymentAmount, senderCounter, receiverCounter uint32) error {
     // Prepare the arguments (the amount to be paid)
     arguments := make([]byte, 4)
