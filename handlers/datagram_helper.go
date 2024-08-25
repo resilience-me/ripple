@@ -1,6 +1,7 @@
 package handlers
 
 import (
+    "time"
     "ripple/types"
     "ripple/db_trustlines"
     "ripple/commands"
@@ -34,6 +35,11 @@ func (dh DatagramHelper) SetTrustlineOut(value uint32) error {
 // SetTrustlineIn sets the inbound trustline amount using the embedded Datagram
 func (dh DatagramHelper) SetTrustlineIn(value uint32) error {
     return db_trustlines.SetTrustlineIn(dh.Username, dh.PeerServerAddress, dh.PeerUsername, value)
+}
+
+// SetTimestamp sets the current Unix timestamp for the Datagram
+func (dh DatagramHelper) SetTimestamp() error {
+    return db_trustlines.SetTimestamp(dh.Datagram, time.Now().Unix())
 }
 
 // PrepareDatagram prepares a new datagram using fields from the embedded Datagram
