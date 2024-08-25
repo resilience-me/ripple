@@ -2,14 +2,13 @@ package tests
 
 import (
     "fmt"
-    "ripple/database"
     "ripple/database/db_trustlines"
 )
 
 // setupPeersAndTrustlines sets up peer relationships and initializes trustlines between a sender and a receiver.
 func setupPeersAndTrustlines(sender, receiver, senderServerAddress, receiverServerAddress, sharedSecretKey string, trustlineAmount uint32) error {
     // Set up peer relationship for the sender
-    if err := SetupPeer(sender, receiver, receiverServerAddress, sharedSecretKey); err != nil {
+    if err := setupPeer(sender, receiver, receiverServerAddress, sharedSecretKey); err != nil {
         return fmt.Errorf("failed to set up peer relationship for %s: %w", sender, err)
     }
     if err := db_trustlines.SetTrustlineIn(sender, receiverServerAddress, receiver, trustlineAmount); err != nil {
@@ -17,7 +16,7 @@ func setupPeersAndTrustlines(sender, receiver, senderServerAddress, receiverServ
     }
 
     // Set up peer relationship for the receiver
-    if err := SetupPeer(receiver, sender, senderServerAddress, sharedSecretKey); err != nil {
+    if err := setupPeer(receiver, sender, senderServerAddress, sharedSecretKey); err != nil {
         return fmt.Errorf("failed to set up peer relationship for %s: %w", receiver, err)
     }
     if err := db_trustlines.SetTrustlineOut(receiver, senderServerAddress, sender, trustlineAmount); err != nil {
