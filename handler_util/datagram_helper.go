@@ -3,7 +3,7 @@ package handler_util
 import (
     "time"
     "ripple/types"
-    "ripple/db_trustlines"
+    "ripple/database/db_trustlines"
     "ripple/commands"
 )
 
