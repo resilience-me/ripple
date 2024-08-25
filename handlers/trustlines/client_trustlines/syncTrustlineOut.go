@@ -16,41 +16,19 @@ import (
 func SyncTrustlineOut(session types.Session) {
     datagram := session.Datagram
 
-    // Prepare the datagram
-    dgOut, err := handlers.PrepareDatagramResponse(datagram)
+    // Read the trustline value
+    trustline, err := db_trustlines.GetTrustlineOutFromDatagram(datagram)
     if err != nil {
-        log.Printf("Error preparing datagram for user %s: %v", datagram.Username, err)
-        comm.SendErrorResponse(session.Addr, "Error preparing datagram.")
+        log.Printf("Error getting trustline for user %s in SyncTrustlineOut: %v", datagram.Username, err)
+        comm.SendErrorResponse(session.Addr, "Failed to retrieve trustline.")
         return
     }
 
-    // Retrieve the syncCounter and sync status
-    syncCounter, isSynced, err := trustlines.GetSyncStatus(datagram)
-    if err != nil {
-        log.Printf("Failed to retrieve sync status in SyncTrustlineOut for user %s: %v", datagram.Username, err)
-        comm.SendErrorResponse(session.Addr, "Failed to retrieve sync status.")
-        return
-    }
-
-    if isSynced {
-        // Trustline is already synced, so prepare a SetTimestamp command
-        dgOut.Command = commands.ServerTrustlines_SetTimestamp
-    } else {
-        // Trustline is not synced, proceed with sending the trustline
-        trustline, err := db_trustlines.GetTrustlineOutFromDatagram(datagram)
-        if err != nil {
-            log.Printf("Error getting trustline for user %s in SyncTrustlineOut: %v", datagram.Username, err)
-            comm.SendErrorResponse(session.Addr, "Failed to retrieve trustline.")
-            return
-        }
-        dgOut.Command = commands.ServerTrustlines_SetTrustline
-        binary.BigEndian.PutUint32(dgOut.Arguments[:4], trustline)
-        binary.BigEndian.PutUint32(dgOut.Arguments[4:8], syncCounter)
-    }
-
-    // Send the prepared datagram
-    if err := comm.SignAndSendDatagram(dgOut, datagram.PeerServerAddress); err != nil {
-        log.Printf("Failed to send datagram in SyncTrustlineOut for user %s: %v", datagram.Username, err)
+    arguments := types.Uint32ToBytes(trustline)
+    
+    // Prepare, sign, and send the datagram using the helper function from the handlers package
+    if err := handlers.PrepareAndSendDatagram(commands.ServerTrustlines_SetTrustline, datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, arguments); err != nil {
+        log.Printf("Failed to prepare and send SetTrustline command from %s to peer %s at server %s: %v", datagram.Username, datagram.PeerUsername, datagram.PeerServerAddress, err)
         return
     }
 
