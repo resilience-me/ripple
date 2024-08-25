@@ -25,7 +25,7 @@ func GenerateSignature(data []byte, secretKey []byte) []byte {
     preimage := make([]byte, len(data)) // Allocate slice with the length of buf
 
     // Copy the data (excluding the last 32 bytes) into the preimage.
-    copy(preimage, buf[:len(data)-32])
+    copy(preimage, data[:len(data)-32])
 
     // Append the secret key to the preimage.
     copy(preimage[len(data)-32:], secretKey)
