@@ -15,7 +15,7 @@ func SyncTrustlineOut(session types.Session) {
     datagram := session.Datagram
 
     // Read the trustline value
-    trustline, err := db_trustlines.GetTrustlineOutFromDatagram(datagram)
+    trustline, err := db_trustlines.GetTrustlineOutWithDatagram(datagram)
     if err != nil {
         log.Printf("Error getting trustline for user %s in SyncTrustlineOut: %v", datagram.Username, err)
         comm.SendErrorResponse(session.Addr, "Failed to retrieve trustline.")
