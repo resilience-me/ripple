@@ -7,8 +7,8 @@ import (
 
 // LoadClientSecretKey, ValidateAndIncrementClientCounter, etc. methods...
 
-// SignDatagram creates a signed datagram by serializing it and adding a signature.
-func (dh DatagramHelper) SignDatagram(peerServerAddress string) ([]byte, error) {
+// Sign creates a signed datagram by serializing it and adding a signature.
+func (dh DatagramHelper) Sign(peerServerAddress string) ([]byte, error) {
 	// Serialize the datagram without the signature field
 	serializedData, err := types.SerializeDatagram(dh.Datagram)
 	if err != nil {
