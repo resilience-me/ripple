@@ -18,8 +18,7 @@ const (
 )
 
 // SendWithRetry sends data with retransmission logic and waits for a simple acknowledgment
-func SendWithRetry(conn *net.UDPConn, addr *net.UDPAddr, data []byte, maxRetries int) error {
-
+func SendWithRetry(conn *net.UDPConn, data []byte, maxRetries int) error {
 	// Generate a unique 32-bit identifier for this transmission
 	identifier := atomic.AddUint32(&identifierCounter, 1)
 
@@ -34,8 +33,8 @@ func SendWithRetry(conn *net.UDPConn, addr *net.UDPAddr, data []byte, maxRetries
 
 	for retries := 0; retries <= maxRetries; retries++ {
 		// Send the datagram with the identifier
-		if _, err := conn.WriteToUDP(packet, addr); err != nil {
-			return fmt.Errorf("failed to send data to %s: %w", addr.String(), err)
+		if _, err := conn.Write(packet); err != nil {
+			return fmt.Errorf("failed to send data: %w", err)
 		}
 
 		// Set a deadline for the read operation
