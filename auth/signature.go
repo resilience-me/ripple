@@ -7,11 +7,11 @@ import (
     "ripple/types"
 )
 
-func LoadClientSecretKey(dg *types.Datagram) ([]byte, error) {
+func loadClientSecretKey(dg *types.Datagram) ([]byte, error) {
     return database.LoadSecretKey(dg.Username)
 }
 
-func LoadServerSecretKey(dg *types.Datagram) ([]byte, error) {
+func loadServerSecretKey(dg *types.Datagram) ([]byte, error) {
     return database.LoadPeerSecretKey(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
 }
 
