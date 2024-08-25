@@ -27,12 +27,12 @@ func ValidatePeerExists(dg *types.Datagram) (string, error) {
 
 // validateClientDatagram validates the client datagram and checks the counter
 func validateClientDatagram(buf []byte, dg *types.Datagram) error {
-	secretKey, err := auth.loadClientSecretKey(dg)
+	secretKey, err := loadClientSecretKey(dg)
 	if err != nil {
 		return fmt.Errorf("loading client secret key failed: %w", err)
 	}
 
-	if !auth.verifySignature(buf, secretKey) {
+	if !verifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
@@ -46,12 +46,12 @@ func validateClientDatagram(buf []byte, dg *types.Datagram) error {
 
 // validateServerDatagram validates the server datagram and checks the counter
 func validateServerDatagram(buf []byte, dg *types.Datagram) error {
-	secretKey, err := auth.loadServerSecretKey(dg)
+	secretKey, err := loadServerSecretKey(dg)
 	if err != nil {
 		return fmt.Errorf("loading server secret key failed: %w", err)
 	}
 
-	if !auth.verifySignature(buf, secretKey) {
+	if !verifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
