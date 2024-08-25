@@ -3,21 +3,7 @@ package auth
 import (
     "crypto/sha256"
     "bytes"
-    "ripple/database"
-    "ripple/types"
 )
-
-func loadClientSecretKey(dg *types.Datagram) ([]byte, error) {
-    return database.LoadSecretKey(dg.Username)
-}
-
-func loadServerSecretKey(dg *types.Datagram) ([]byte, error) {
-    return database.LoadPeerSecretKey(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
-}
-
-func loadServerSecretKeyOut(dg *types.Datagram, peerServerAddress string) ([]byte, error) {
-    return database.LoadPeerSecretKey(dg.PeerUsername, peerServerAddress, dg.Username)
-}
 
 // verifySignature checks the integrity of the received buffer
 func verifySignature(buf []byte, key []byte) bool {
