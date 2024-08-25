@@ -3,8 +3,6 @@ package server_trustlines
 import (
     "log"
     "time"
-    "ripple/handlers"
-    "ripple/commands"
     "ripple/types"
     "ripple/database/db_trustlines"
 )
