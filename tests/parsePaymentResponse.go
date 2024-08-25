@@ -11,9 +11,9 @@ const (
     headerLen        = usernameLen + serverAddressLen + 1 + 4 + 4 // Total header length
 )
 
-func parsePaymentResponse(response []byte) (string, string, byte, uint32, uint32, error) {
+func parsePaymentResponse(response []byte) (string, error) {
     if len(response) < headerLen {
-        return "", "", 0, 0, 0, fmt.Errorf("unexpected response length")
+        return "", fmt.Errorf("unexpected response length")
     }
 
     // Extract username and server address
@@ -25,5 +25,6 @@ func parsePaymentResponse(response []byte) (string, string, byte, uint32, uint32
     amount := binary.BigEndian.Uint32(response[usernameLen+serverAddressLen+1 : usernameLen+serverAddressLen+5])
     nonce := binary.BigEndian.Uint32(response[usernameLen+serverAddressLen+5 : usernameLen+serverAddressLen+9])
 
-    return username, serverAddress, paymentDirection, amount, nonce, nil
+    return fmt.Sprintf("Username: %s, Server Address: %s, Payment Direction: %d, Amount: %d, Nonce: %d",
+        username, serverAddress, paymentDirection, amount, nonce), nil
 }
