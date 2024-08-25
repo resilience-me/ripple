@@ -15,7 +15,7 @@ import (
 func GetTrustline(session types.Session) {
     datagram := session.Datagram
 
-    trustline, err := db_trustlines.GetTrustlineOutFromDatagram(session.Datagram)
+    trustline, err := db_trustlines.GetTrustlineOutWithDatagram(session.Datagram)
     if err != nil {
         log.Printf("Error getting trustline for user %s in GetTrustline: %v", session.Datagram.Username, err)
         return
@@ -24,7 +24,7 @@ func GetTrustline(session types.Session) {
     arguments := types.Uint32ToBytes(trustline)
 
     // Prepare, sign, and send the datagram using the helper function from the handlers package
-    if err := handlers.PrepareAndSendDatagram(commands.ServerTrustlines_SetTrustline, datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, arguments); err != nil {
+    if err := handlers.PrepareAndSendDatagramWithDatagram(datagram, commands.ServerTrustlines_SetTrustline, arguments); err != nil {
         log.Printf("Failed to prepare and send ServerTrustlines_SetTrustline command from %s to peer %s at server %s: %v", datagram.Username, datagram.PeerUsername, datagram.PeerServerAddress, err)
         return
     }
