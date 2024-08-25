@@ -6,14 +6,14 @@ import (
 
     "ripple/comm"
     "ripple/types"
-    "ripple/handlers"
+    "ripple/handler_util"
     "ripple/commands"
 )
 
 // GetTrustline handles the request to get the current trustline amount from another server
 func GetTrustline(session types.Session) {
     // Instantiate a DatagramHelper using the NewDatagramHelper function
-    dh := handlers.NewDatagramHelper(session.Datagram)
+    dh := handler_util.NewDatagramHelper(session.Datagram)
 
     // Retrieve the outbound trustline using DatagramHelper
     trustline, err := dh.GetTrustlineOut()
