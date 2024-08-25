@@ -1,9 +1,8 @@
-package main
+package tests
 
 import (
     "encoding/binary"
     "log"
-    "ripple/testframework"
 )
 
 func testTrustlineUpdate() {
