@@ -16,7 +16,7 @@ func ReadFile(dir, filename string) ([]byte, error) {
         return nil, fmt.Errorf("error reading file %s: %w", filePath, err)
     }
     
-    // Remove newlines
+    // Remove trailing newlines that might be added by text editors
     trimmedData := bytes.TrimSpace(data)
     
     return trimmedData, nil
