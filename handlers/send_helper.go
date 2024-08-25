@@ -8,7 +8,7 @@ import (
 // SignAndSend signs a datagram and sends it over the network with the standard importance (5 retries).
 func (dh DatagramHelper) SignAndSend(peerServerAddress string) error {
 	// Create the signed datagram
-	serializedData, err := dh.SignDatagram(peerServerAddress)
+	serializedData, err := dh.Sign(peerServerAddress)
 	if err != nil {
 		return fmt.Errorf("failed to create signed datagram: %w", err)
 	}
@@ -24,7 +24,7 @@ func (dh DatagramHelper) SignAndSend(peerServerAddress string) error {
 // SignAndSendPriority signs a datagram and sends it over the network with priority importance (12 retries).
 func (dh DatagramHelper) SignAndSendPriority(peerServerAddress string) error {
 	// Create the signed datagram
-	serializedData, err := dh.SignDatagram(peerServerAddress)
+	serializedData, err := dh.Sign(peerServerAddress)
 	if err != nil {
 		return fmt.Errorf("failed to create signed datagram: %w", err)
 	}
