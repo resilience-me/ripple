@@ -14,6 +14,21 @@ func serializePaymentDetails(payment *pathfinding.Payment, amount uint32) []byte
     return buffer
 }
 
+GetPaymentDetails(username string) (string, uint32, byte) {
+    // Use the existing Find method from PathManager to retrieve the account
+    account := pathfinding.GetPathManager().Find(username)
+    if account == nil || account.Payment == nil {
+        return nil // Return nil if no account or no payment is found
+    }
+    // Find the Path using the identifier in the Payment
+    path := account.Find(account.Payment.Identifier)
+    if path == nil {
+        return nil // Return nil if no Path is found for the payment
+    }
+    return account.Payment.Identifier, path.Amount, account.Payment.InOrOut
+    
+}
+
 // Wrapper function to fetch and serialize payment details
 func FetchAndSerializePaymentDetails(username string) []byte {
     // Use the existing Find method from PathManager to retrieve the account
