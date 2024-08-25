@@ -3,7 +3,7 @@ package payment_operations
 import (
     "log"
     "ripple/types"
-    "ripple/handlers"
+    "ripple/handler_util"
     "ripple/commands"
     "ripple/pathfinding"
 )
@@ -14,7 +14,7 @@ func PathRecurse(datagram *types.Datagram, peer pathfinding.PeerAccount, depth u
     arguments := append(datagram.Arguments[:32], types.Uint32ToBytes(depth)...)
 
     // Prepare, sign, and send the datagram using the helper function from the handlers package
-    if err := handlers.PrepareAndSendDatagram(commands.ServerPayments_PathRecurse, datagram.Username, peer.ServerAddress, peer.Username, arguments); err != nil {
+    if err := handler_util.PrepareAndSendDatagram(commands.ServerPayments_PathRecurse, datagram.Username, peer.ServerAddress, peer.Username, arguments); err != nil {
         log.Printf("Failed to prepare and send PathRecurse command from %s to peer %s at server %s: %v", datagram.Username, peer.Username, peer.ServerAddress, err)
         return
     }
