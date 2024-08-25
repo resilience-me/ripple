@@ -5,7 +5,7 @@ import (
     "log"
 )
 
-func testTrustlineUpdate() {
+func TestTrustlineUpdate() {
     // Set the parameters for the test
     username := "testuser"
     peerUsername := "peeruser"
