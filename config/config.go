@@ -7,6 +7,7 @@ import (
     "io/ioutil"
     "path/filepath"
     "time"
+    "strings"
 )
 
 const (
@@ -35,11 +36,14 @@ func GetDataDir() string {
 // loadServerAddress reads the server address from the configuration file.
 func loadServerAddress() error {
     addressPath := filepath.Join(datadir, "server_address.txt")
-    address, err := ioutil.ReadFile(addressPath)
+    addressBytes, err := ioutil.ReadFile(addressPath)
     if err != nil {
         return fmt.Errorf("error loading server address from %s: %w", addressPath, err)
     }
-    serverAddress = string(address)
+    
+    // Remove trailing newlines that might be added by text editors
+    serverAddress := strings.TrimSpace(string(addressBytes))
+    
     log.Printf("Loaded server address: %s", serverAddress) // Log that the address was loaded
     return nil
 }
