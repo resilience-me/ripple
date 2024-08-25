@@ -40,8 +40,8 @@ func VerifySignature(data []byte, key []byte) bool {
     signature := data[len(data)-32:]
 
     // Generate the expected signature using the GenerateSignature method
-    hash := generateSignature(data, key)
+    expectedSignature := generateSignature(data, key)
 
     // Compare the computed hash with the signature directly using bytes.Equal
-    return bytes.Equal(signature, hash[:])
+    return bytes.Equal(signature, expectedSignature)
 }
