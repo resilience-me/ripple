@@ -3,7 +3,7 @@ package payment_operations
 import (
     "fmt"
     "ripple/database/db_trustlines"
-    "ripple/handlers"
+    "ripple/handler_util"
 )
 
 // CheckTrustlineSufficient checks if the trustline (either incoming or outgoing) is sufficient for the given amount.
@@ -43,7 +43,7 @@ func CheckTrustlineAndSendFindPathDatagram(command byte, username, peerServerAdd
     }
 
     // Prepare, sign, and send the datagram
-    if err := handlers.PrepareAndSendDatagram(command, username, peerServerAddress, peerUsername, arguments); err != nil {
+    if err := handler_util.PrepareAndSendDatagram(command, username, peerServerAddress, peerUsername, arguments); err != nil {
         return fmt.Errorf("failed to prepare and send pathfinding request from %s to peer %s at server %s: %v", username, peerUsername, peerServerAddress, err)
     }
 
