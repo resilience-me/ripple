@@ -18,14 +18,14 @@ func sendWithAddress(addr *net.UDPAddr, data []byte, maxRetries int) error {
 	defer conn.Close()
 
 	// Use the udpr.SendWithRetry to send the data
-	if err := udpr.SendWithRetry(conn, addr, data, maxRetries); err != nil {
+	if err := udpr.SendWithRetry(conn, data, maxRetries); err != nil {
 		return fmt.Errorf("error sending data: %w", err)
 	}
 
 	return nil
 }
 
-// sendWithResolvedAddressAndConn resolves the address, creates a new UDP connection, and sends data with retries.
+// sendWithResolvedAddress resolves the address, creates a new UDP connection, and sends data with retries.
 func sendWithResolvedAddress(address string, data []byte, maxRetries int) error {
 	// Resolve the destination address to a UDP address
 	addr, err := net.ResolveUDPAddr("udp", fmt.Sprintf("%s:%d", address, config.Port))
