@@ -9,7 +9,7 @@ import (
 
 func main() {
     // Define a flag to select the test
-    testName := flag.String("test", "testTrustlineUpdate", "Name of the test to run")
+    testName := flag.String("test", "TestTrustlineUpdate", "Name of the test to run")
     flag.Parse()
 
     // Initialize the test account (common setup)
@@ -19,7 +19,7 @@ func main() {
 
     // Map of test functions
     tests := map[string]func(){
-        "testTrustlineUpdate": tests.testTrustlineUpdate,
+        "TestTrustlineUpdate": tests.TestTrustlineUpdate,
         // Add more test functions here
     }
 
