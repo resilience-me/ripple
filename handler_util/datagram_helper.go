@@ -38,7 +38,8 @@ func (dh DatagramHelper) SetTrustlineIn(value uint32) error {
 
 // SetTimestamp sets the current Unix timestamp for the Datagram
 func (dh DatagramHelper) SetTimestamp() error {
-    return db_trustlines.SetTimestamp(dh.Username, dh.PeerServerAddress, dh.PeerUsername, time.Now().Unix())
+    now := time.Now().Unix()
+    return db_trustlines.SetTimestamp(dh.Username, dh.PeerServerAddress, dh.PeerUsername, now)
 }
 
 // PrepareDatagramWithoutCommand prepares a new datagram using fields from the embedded Datagram
