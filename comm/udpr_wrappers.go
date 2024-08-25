@@ -32,7 +32,7 @@ func sendWithResolvedAddress(address string, data []byte, maxRetries int) error 
 	if err != nil {
 		return fmt.Errorf("failed to resolve address '%s:%d': %w", address, config.Port, err)
 	}
-	// Call SendWithAddress function with the resolved address
+	// Call sendWithAddress function with the resolved address
 	return sendWithAddress(addr, data, maxRetries)
 }
 
