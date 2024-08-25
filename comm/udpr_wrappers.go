@@ -33,7 +33,7 @@ func sendWithResolvedAddress(address string, data []byte, maxRetries int) error 
 		return fmt.Errorf("failed to resolve address '%s:%d': %w", address, config.Port, err)
 	}
 	// Call SendWithAddress function with the resolved address
-	return SendWithAddress(addr, data, maxRetries)
+	return sendWithAddress(addr, data, maxRetries)
 }
 
 // Wrapper for udpr.SendAck
