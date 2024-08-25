@@ -19,6 +19,7 @@ func main() {
     }{
         {"TestTrustlineUpdate", tests.TestTrustlineUpdate},
         {"TestNewPayments", tests.TestNewPayments},
+        {"TestStartPayment", tests.TestStartPayment}, // Add the new test here
         // Add more test functions here
     }
 
