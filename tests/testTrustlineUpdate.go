@@ -19,13 +19,13 @@ func testTrustlineUpdate() {
     binary.BigEndian.PutUint32(arguments[:4], trustlineAmount)
 
     // Prepare and sign the datagram
-    data, err := testframework.PrepareAndSignDatagram(username, peerUsername, peerServerAddress, command, counter, arguments)
+    data, err := PrepareAndSignDatagram(username, peerUsername, peerServerAddress, command, counter, arguments)
     if err != nil {
         log.Fatalf("Failed to prepare datagram: %v", err)
     }
 
     // Send the datagram and receive the response
-    response, err := testframework.SendAndReceive("127.0.0.1:2012", data)
+    response, err := SendAndReceive("127.0.0.1:2012", data)
     if err != nil {
         log.Fatalf("Failed to send and receive: %v", err)
     }
