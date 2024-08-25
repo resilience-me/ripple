@@ -1,7 +1,6 @@
 package db_trustlines
 
 import (
-	"ripple/types"
 	"ripple/database"
 )
 
