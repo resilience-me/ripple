@@ -72,8 +72,8 @@ func (dh DatagramHelper) SetTimestamp() error {
     return db_trustlines.SetTimestamp(dh.Username, dh.PeerServerAddress, dh.PeerUsername, time.Now().Unix())
 }
 
-// PrepareDatagram prepares a new datagram using fields from the embedded Datagram
-func (dh DatagramHelper) PrepareDatagram() (*types.Datagram, error) {
+// PrepareDatagramWithoutCommand prepares a new datagram using fields from the embedded Datagram
+func (dh DatagramHelper) PrepareDatagramWithoutCommand() (*types.Datagram, error) {
     return PrepareDatagramWithoutCommand(dh.Username, dh.PeerServerAddress, dh.PeerUsername)
 }
 
