@@ -3,7 +3,7 @@ package client_payments
 import (
     "log"
     "ripple/comm"
-    "ripple/payment_operations"
+    "ripple/payments/payment_operations"
     "ripple/pathfinding"
     "ripple/types"
 )
