@@ -7,8 +7,8 @@ import (
     "ripple/database/db_trustlines"
 )
 
-// SetupPeer initializes the peer relationship between two accounts, including trustlines and peer-specific secret keys.
-func SetupPeer(username, peerUsername, peerServerAddress, secretKey string) error {
+// setupPeer initializes the peer relationship between two accounts, including trustlines and peer-specific secret keys.
+func setupPeer(username, peerUsername, peerServerAddress, secretKey string) error {
     trustlineDir := database.GetTrustlineDir(username, peerServerAddress, peerUsername)
 
     // Create the directories if they don't exist
