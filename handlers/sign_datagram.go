@@ -5,10 +5,13 @@ import (
     "ripple/types"
 )
 
-// generateSignature generates a SHA-256 hash for the given data using the provided key.
-func generateSignature(data []byte, secretKey []byte) []byte {
+// signDatagramData generates a SHA-256 hash for the given datagram using the provided key.
+func signDatagramData(data []byte, secretKey []byte) []byte {
+
+	datagramWithoutSignatureField := data[:len(data)-32]
+
     // Concatenate data and secret
-    preimage := append(data, secretKey...)
+    preimage := append(datagramWithoutSignatureField, secretKey...)
 
     // Compute the SHA-256 hash
     hash := sha256.Sum256(preimage)
@@ -32,10 +35,8 @@ func SignDatagram(dg *types.Datagram, peerServerAddress string) ([]byte, error) 
         return nil, fmt.Errorf("failed to load server secret key: %w", err)
     }
 
-    dataWithoutSignature := serializedData[:len(serializedData)-32]
-
     // Generate signature for the serialized data
-    signature := generateSignature(dataWithoutSignature, secretKey)
+    signature := signDatagramData(serializedData, secretKey)
 
     // Update the datagram's signature field with the generated signature
     copy(dg.Signature[:], []byte(signature)) // Ensure we copy the signature into the byte array
