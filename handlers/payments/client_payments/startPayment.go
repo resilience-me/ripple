@@ -3,6 +3,7 @@ package client_payments
 import (
     "log"
     "ripple/comm"
+    "ripple/handlers/payments"
     "ripple/handlers/payments/payment_operations"
     "ripple/types"
 )
@@ -12,7 +13,7 @@ func StartPayment(session types.Session) {
     username := session.Datagram.Username
 
     // Extract payment details
-    identifier, amount, inOrOut, err := GetPaymentDetails(username)
+    identifier, amount, inOrOut, err := payments.GetPaymentDetails(username)
     if err != nil {
         if err := comm.SendErrorResponse(session.Addr, "Payment not registered or missing payment details."); err != nil {
             log.Printf("Failed to send error response for user %s: %v", username, err)
