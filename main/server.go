@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"sync/atomic"
+	"ripple/auth"
 	"ripple/comm"
 	"ripple/types"
 )
@@ -48,7 +49,7 @@ func runServerLoop(conn *net.UDPConn, sessionManager *SessionManager, shutdownFl
 		datagram := types.DeserializeDatagram(dataBuffer)
 
 		// Validate the datagram
-		if err := validateDatagram(dataBuffer, datagram); err != nil {
+		if err := auth.ValidateDatagram(dataBuffer, datagram); err != nil {
 			log.Printf("Error validating datagram: %v", err)
 			continue
 		}
