@@ -20,10 +20,10 @@ func TestStartPayment() {
     sharedSecretKey := "sharedsecretkey1234567890abcdef" // Shared secret key for the peers
 
     // Setup accounts with initial balances and secret keys
-    if err := SetupAccount(senderUsername, receiverUsername, senderServerAddress, "sendersecretkey1234567890abcdef"); err != nil {
+    if err := SetupAccount(senderUsername, "sendersecretkey1234567890abcdef"); err != nil {
         log.Fatalf("Failed to set up sender account: %v", err)
     }
-    if err := SetupAccount(receiverUsername, senderUsername, receiverServerAddress, "receiversecretkey1234567890abcdef"); err != nil {
+    if err := SetupAccount(receiverUsername, "receiversecretkey1234567890abcdef"); err != nil {
         log.Fatalf("Failed to set up receiver account: %v", err)
     }
 
