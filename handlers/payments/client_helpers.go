@@ -50,7 +50,7 @@ func GetPaymentDetails(username string) (string, uint32, byte, error) {
 func FetchAndSerializePaymentDetails(username string) []byte {
     payment, path, err := getPaymentAndPath(username)
     if err != nil {
-        return nil
+        return []byte{}
     }
     return serializePaymentDetails(payment, path.Amount)
 }
