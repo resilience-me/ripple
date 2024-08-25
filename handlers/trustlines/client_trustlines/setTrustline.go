@@ -24,15 +24,8 @@ func SetTrustline(session types.Session) {
         return
     }
 
-    // Increment the sync_counter using the function in trustlines package
-    if err := trustlines.IncrementSyncCounter(datagram); err != nil {
-        log.Printf("Error incrementing sync_counter for user %s: %v", datagram.Username, err)
-        comm.SendErrorResponse(session.Addr, "Failed to update sync counter.")
-        return
-    }
-
     // Log success
-    log.Printf("Trustline and sync counter updated successfully for user %s.", datagram.Username)
+    log.Printf("Trustline updated successfully for user %s.", datagram.Username)
 
     // Send success response
     if err := comm.SendSuccessResponse(session.Addr, []byte("Trustline updated successfully.")); err != nil {
