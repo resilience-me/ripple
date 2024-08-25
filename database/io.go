@@ -1,6 +1,7 @@
 package database
 
 import (
+    "bytes"
     "fmt"
     "io/ioutil"
     "path/filepath"
@@ -14,7 +15,11 @@ func ReadFile(dir, filename string) ([]byte, error) {
     if err != nil {
         return nil, fmt.Errorf("error reading file %s: %w", filePath, err)
     }
-    return data, nil
+    
+    // Remove newlines
+    trimmedData := bytes.TrimSpace(data)
+    
+    return trimmedData, nil
 }
 
 // WriteFile writes a byte slice to a file.
