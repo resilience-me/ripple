@@ -28,7 +28,7 @@ func TestStartPayment() {
     }
 
     // Set up trustlines between sender and receiver
-    if err := setupPeersAndTrustlines(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, paymentAmount, sharedSecretKey); err != nil {
+    if err := setupPeersAndTrustlines(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, sharedSecretKey, paymentAmount); err != nil {
         log.Fatalf("Failed to set up peers and trustlines: %v", err)
     }
 
