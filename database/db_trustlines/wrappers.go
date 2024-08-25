@@ -1,7 +1,5 @@
 package db_trustlines
 
-import "ripple/types"
-
 // GetTrustline retrieves the trustline (either incoming or outgoing) based on the inOrOut parameter.
 func GetTrustline(username, peerServerAddress, peerUsername string, inOrOut byte) (uint32, error) {
     if inOrOut == 0 { // Assume 0 means incoming trustline
