@@ -10,7 +10,7 @@ func SetTrustlineOut(username, peerServerAddress, peerUsername string, value uin
 	return database.WriteUint32ToFile(trustlineDir, "trustline_out.txt", value)
 }
 
-// SetTrustlineOut sets the inbound trustline amount.
+// SetTrustlineIn sets the inbound trustline amount.
 func SetTrustlineIn(username, peerServerAddress, peerUsername string, value uint32) error {
 	trustlineDir := database.GetTrustlineDir(username, peerServerAddress, peerUsername)
 	return database.WriteUint32ToFile(trustlineDir, "trustline_in.txt", value)
