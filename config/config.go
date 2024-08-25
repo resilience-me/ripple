@@ -34,13 +34,17 @@ func GetDataDir() string {
 
 // loadServerAddress reads the server address from the configuration file.
 func loadServerAddress() error {
-    addressPath := filepath.Join(datadir, "server_address.txt")
-    address, err := ioutil.ReadFile(addressPath)
+    // Read the server address from the file
+    addressBytes, err := database.ReadFile(datadir, "server_address.txt")
     if err != nil {
-        return fmt.Errorf("error loading server address from %s: %w", addressPath, err)
+        return fmt.Errorf("error loading server address: %w", err)
     }
-    serverAddress = string(address)
-    log.Printf("Loaded server address: %s", serverAddress) // Log that the address was loaded
+
+    // Convert the byte slice to a string
+    serverAddress = string(addressBytes)
+
+    // Log that the address was loaded
+    log.Printf("Loaded server address: %s", serverAddress)
     return nil
 }
 
