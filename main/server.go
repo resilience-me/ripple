@@ -49,7 +49,7 @@ func runServerLoop(conn *net.UDPConn, sessionManager *SessionManager, shutdownFl
 		datagram := types.DeserializeDatagram(dataBuffer)
 
 		// Validate the datagram
-		if err := auth.ValidateDatagram(dataBuffer, datagram); err != nil {
+		if err := validateDatagram(dataBuffer, datagram); err != nil {
 			log.Printf("Error validating datagram: %v", err)
 			continue
 		}
