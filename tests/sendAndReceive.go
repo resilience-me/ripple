@@ -52,13 +52,22 @@ func sendAndReceive(serverAddress string, data []byte) ([]byte, error) {
 
     // Wait for the server's response
     buffer = make([]byte, 1024)
-    n, _, err = conn.ReadFromUDP(buffer)
+    n, addr, err := conn.ReadFromUDP(buffer)
     if err != nil {
         return nil, fmt.Errorf("failed to receive server response: %w", err)
     }
 
     response := buffer[:n]
     fmt.Printf("Received response: %x\n", response)
+
+    // Extract the identifier from the response and send it back as an acknowledgment
+    responseID := response[:4]
+    _, err = conn.WriteToUDP(responseID, addr)
+    if err != nil {
+        return nil, fmt.Errorf("failed to send response acknowledgment: %w", err)
+    }
+
+    fmt.Printf("Sent acknowledgment for server response: %x\n", responseID)
 
     return response, nil
 }
