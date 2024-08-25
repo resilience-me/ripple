@@ -4,7 +4,6 @@ import (
     "time"
     "ripple/types"
     "ripple/database/db_trustlines"
-    "ripple/commands"
 )
 
 // DatagramHelper provides utility methods for working with a Datagram instance
