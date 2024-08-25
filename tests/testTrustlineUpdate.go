@@ -27,7 +27,7 @@ func TestTrustlineUpdate() {
     }
 
     // Generate the server address using config package
-    serverAddress := fmt.Sprintf("%s:%d", config.GetServerAddress(), config.Port)
+    serverAddress := fmt.Sprintf("127.0.0.1:%d", config.Port)
 
     // Send the datagram and receive the response
     response, err := sendAndReceive(serverAddress, data)
