@@ -5,14 +5,14 @@ import (
     "log"
 
     "ripple/comm"
-    "ripple/handlers"
+    "ripple/handler_util"
     "ripple/types"
 )
 
 // SetTrustline updates the trustline based on the given session.
 func SetTrustline(session types.Session) {
     // Instantiate a DatagramHelper using the NewDatagramHelper function
-    dh := handlers.NewDatagramHelper(session.Datagram)
+    dh := handler_util.NewDatagramHelper(session.Datagram)
 
     // Retrieve the trustline amount from the Datagram
     trustlineAmount := binary.BigEndian.Uint32(dh.Arguments[:4])
