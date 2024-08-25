@@ -30,7 +30,7 @@ func TestNewPayments() {
     log.Printf("Using server address: %s", serverAddress) // Debugging line
 
     // Initiate the payment process
-    if err := InitiatePayment(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, serverAddress, paymentAmount, senderCounter, receiverCounter); err != nil {
+    if err := initiatePayment(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, serverAddress, paymentAmount, senderCounter, receiverCounter); err != nil {
         log.Fatalf("Payment initiation failed: %v", err)
     }
 
