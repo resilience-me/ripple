@@ -2,8 +2,7 @@ package tests
 
 import (
     "encoding/binary"
-    "log"
-    "ripple/commands"
+    "fmt"
 )
 
 const (
