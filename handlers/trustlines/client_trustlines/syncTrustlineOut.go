@@ -27,6 +27,7 @@ func SyncTrustlineOut(session types.Session) {
     // Prepare, sign, and send the datagram using the helper function from the handlers package
     if err := handlers.PrepareAndSendDatagram(commands.ServerTrustlines_SetTrustline, datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, arguments); err != nil {
         log.Printf("Failed to prepare and send SetTrustline command from %s to peer %s at server %s: %v", datagram.Username, datagram.PeerUsername, datagram.PeerServerAddress, err)
+        comm.SendErrorResponse(session.Addr, "Failed to send ServerTrustlines_SetTrustline command.")
         return
     }
 
