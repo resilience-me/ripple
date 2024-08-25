@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-    // Initialize the test account (common setup)
+    // Common setup for all tests
     if err := tests.SetupAccount("testuser", "peeruser", "127.0.0.1", "mysecretkey1234567890abcdef"); err != nil {
         log.Fatalf("Failed to set up account: %v", err)
     }
@@ -18,7 +18,7 @@ func main() {
         fn   func()
     }{
         0: {"TestTrustlineUpdate", tests.TestTrustlineUpdate},
-        1: {"TestSenderAndReceiverInitiatePayment", tests.TestSenderAndReceiverInitiatePayment},
+        1: {"TestNewPayments", tests.TestNewPayments},
         // Add more test functions here
     }
 
