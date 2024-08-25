@@ -9,6 +9,7 @@ const (
     ClientPayments_NewPaymentOut       = 5
     ClientPayments_NewPaymentIn        = 6
     ClientPayments_GetPayment          = 7
+    ClientPayments_StartPayment        = 8
 
     ServerTrustlines_SetTrustline      = 127
     ServerTrustlines_GetTrustline      = 128
