@@ -4,9 +4,9 @@ import (
     "fmt"
     "log"
     "os"
+    "io/ioutil"
     "path/filepath"
     "time"
-    "ripple/database"
 )
 
 const (
@@ -48,7 +48,7 @@ func loadServerAddress() error {
 func setupLogger() error {
     // Construct the full path to the log file
     logFilePath := filepath.Join(datadir, "ripple.log")
-    
+
     logFile, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
     if err != nil {
         return fmt.Errorf("failed to open log file: %w", err)
