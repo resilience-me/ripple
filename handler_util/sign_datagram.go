@@ -2,6 +2,7 @@ package handler_util
 
 import (
     "fmt"
+    "crypto/sha256"
     "ripple/types"
     "ripple/database"
 )
