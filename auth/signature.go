@@ -7,16 +7,16 @@ import (
     "ripple/types"
 )
 
+func LoadServerSecretKeyOut(dg *types.Datagram, peerServerAddress string) ([]byte, error) {
+    return database.LoadPeerSecretKey(dg.PeerUsername, peerServerAddress, dg.Username)
+}
+
 func loadClientSecretKey(dg *types.Datagram) ([]byte, error) {
     return database.LoadSecretKey(dg.Username)
 }
 
 func loadServerSecretKey(dg *types.Datagram) ([]byte, error) {
     return database.LoadPeerSecretKey(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
-}
-
-func LoadServerSecretKeyOut(dg *types.Datagram, peerServerAddress string) ([]byte, error) {
-    return database.LoadPeerSecretKey(dg.PeerUsername, peerServerAddress, dg.Username)
 }
 
 // GenerateSignature generates a SHA-256 hash for the given datagram using the provided key.
@@ -34,8 +34,8 @@ func GenerateSignature(data []byte, secretKey []byte) []byte {
     return hash[:]
 }
 
-// VerifySignature checks the integrity of the received buffer
-func VerifySignature(data []byte, key []byte) bool {
+// verifySignature checks the integrity of the received buffer
+func verifySignature(data []byte, key []byte) bool {
     // The signature is the last 32 bytes of the buffer
     signature := data[len(data)-32:]
 
