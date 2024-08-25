@@ -19,7 +19,7 @@ func main() {
 
     // Map of test functions
     tests := map[string]func(){
-        "testTrustlineUpdate": testTrustlineUpdate,
+        "testTrustlineUpdate": tests.testTrustlineUpdate,
         // Add more test functions here
     }
 
