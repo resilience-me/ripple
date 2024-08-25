@@ -6,7 +6,6 @@ import (
 
     "ripple/commands"
     "ripple/comm"
-    "ripple/database/db_trustlines"
     "ripple/handlers"
     "ripple/types"
 )
