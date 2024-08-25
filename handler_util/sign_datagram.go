@@ -3,7 +3,7 @@ package handler_util
 import (
     "fmt"
     "ripple/types"
-    "ripple/database"
+    "ripple/auth"
 )
 
 // SignDatagram creates a signed datagram by serializing it and adding a signature.
