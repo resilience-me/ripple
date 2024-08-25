@@ -7,13 +7,18 @@ import (
 )
 
 func main() {
+    // Initialize the test account (common setup)
+    if err := tests.SetupAccount("testuser", "peeruser", "127.0.0.1", "mysecretkey1234567890abcdef"); err != nil {
+        log.Fatalf("Failed to set up account: %v", err)
+    }
+
     // Map of test functions
     testFuncs := map[int]struct {
         name string
         fn   func()
     }{
         0: {"TestTrustlineUpdate", tests.TestTrustlineUpdate},
-        1: {"TestNewPayments", tests.TestNewPayments},
+        1: {"TestSenderAndReceiverInitiatePayment", tests.TestSenderAndReceiverInitiatePayment},
         // Add more test functions here
     }
 
