@@ -13,7 +13,7 @@ func StartPayment(session types.Session) {
     username := session.Datagram.Username
 
     // Extract payment details
-    identifier, amount, inOrOut, err := GetPaymentDetails()
+    identifier, amount, inOrOut, err := GetPaymentDetails(username)
     if err != nil {
         if err := comm.SendErrorResponse(session.Addr, "Payment not registered or missing payment details."); err != nil {
             log.Printf("Failed to send error response for user %s: %v", username, err)
