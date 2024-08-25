@@ -16,7 +16,7 @@ func GetTrustlineIn(session types.Session) {
     // Fetch the inbound trustline using DatagramHelper
     trustline, err := dh.GetTrustlineIn()
     if err != nil {
-        log.Printf("Error reading inbound trustline for user %s: %v", dh.Datagram.Username, err)
+        log.Printf("Error reading inbound trustline for user %s: %v", dh.Username, err)
         comm.SendErrorResponse(session.Addr, "Error reading inbound trustline.")
         return
     }
@@ -26,9 +26,9 @@ func GetTrustlineIn(session types.Session) {
 
     // Send the success response back to the client
     if err := comm.SendSuccessResponse(session.Addr, responseData); err != nil {
-        log.Printf("Error sending success response to user %s: %v", dh.Datagram.Username, err)
+        log.Printf("Error sending success response to user %s: %v", dh.Username, err)
         return
     }
 
-    log.Printf("Inbound trustline sent successfully to user %s.", dh.Datagram.Username)
+    log.Printf("Inbound trustline sent successfully to user %s.", dh.Username)
 }
