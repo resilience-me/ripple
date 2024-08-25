@@ -13,7 +13,7 @@ func StartPayment(session types.Session) {
     username := session.Datagram.Username
 
     // Extract payment details
-    identifier, amount, inOrOut, err := payments.GetPaymentDetails(username)
+    paymentIdentifier, paymentAmount, inOrOut, err := payments.GetPaymentDetails(username)
     if err != nil {
         if err := comm.SendErrorResponse(session.Addr, "Payment not registered or missing payment details."); err != nil {
             log.Printf("Failed to send error response for user %s: %v", username, err)
@@ -22,7 +22,7 @@ func StartPayment(session types.Session) {
     }
 
     // Initiate pathfinding using StartFindPath from payment_operations
-    payment_operations.StartFindPath(username, paymentDetails.Identifier, path.Amount, paymentDetails.InOrOut)
+    payment_operations.StartFindPath(username, paymentIdentifier, paymentAmount, inOrOut)
 
     log.Printf("Payment started for user %s.", username)
 
