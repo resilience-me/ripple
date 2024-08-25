@@ -8,7 +8,7 @@ import (
 
 func main() {
     // Common setup for all tests
-    if err := tests.SetupAccount("testuser", "peeruser", "127.0.0.1", "mysecretkey1234567890abcdef"); err != nil {
+    if err := tests.SetupAccount("testuser", "mysecretkey1234567890abcdef"); err != nil {
         log.Fatalf("Failed to set up account: %v", err)
     }
 
