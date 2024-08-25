@@ -4,13 +4,13 @@ import (
     "encoding/binary"
     "log"
     "ripple/types"
-    "ripple/database/db_pathfinding"
+    "ripple/database/pathfinding"
 )
 
 // ForwardFindPath forwards the pathfinding request to all connected peers
 func ForwardFindPath(datagram *types.Datagram, inOrOut byte) {
     // Retrieve the list of connected peers
-    peers, err := db_pathfinding.GetPeers(datagram.Username)
+    peers, err := pathfinding.GetPeers(datagram.Username)
     if err != nil {
         log.Printf("Failed to retrieve peers for user %s: %v", datagram.Username, err)
         return
