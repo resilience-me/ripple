@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"sync"
-	"ripple/auth"
+	"ripple/main/auth"
 	"ripple/comm"
 	"ripple/types"
 )
