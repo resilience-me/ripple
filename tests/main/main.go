@@ -4,6 +4,7 @@ import (
     "flag"
     "fmt"
     "log"
+    "ripple/tests"
 )
 
 func main() {
@@ -12,7 +13,7 @@ func main() {
     flag.Parse()
 
     // Initialize the test account (common setup)
-    if err := SetupAccount("testuser", "peeruser", "127.0.0.1", "mysecretkey1234567890abcdef"); err != nil {
+    if err := tests.SetupAccount("testuser", "peeruser", "127.0.0.1", "mysecretkey1234567890abcdef"); err != nil {
         log.Fatalf("Failed to set up account: %v", err)
     }
 
