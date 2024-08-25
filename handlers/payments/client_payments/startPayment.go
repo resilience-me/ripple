@@ -24,7 +24,7 @@ func StartPayment(session types.Session) {
     paymentDetails := account.Payment
 
     // Initiate pathfinding using StartFindPath
-    err := pathfinding.StartFindPath(paymentDetails)
+    err := payment_operations.StartFindPath(paymentDetails)
     if err != nil {
         log.Printf("Pathfinding failed for user %s: %v", username, err)
         if err := comm.SendErrorResponse(session.Addr, "Failed to start payment due to pathfinding error."); err != nil {
