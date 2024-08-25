@@ -20,9 +20,9 @@ func loadServerSecretKeyOut(dg *types.Datagram, peerServerAddress string) ([]byt
 }
 
 // GenerateSignature generates a SHA-256 hash for the given datagram using the provided key.
-func GenerateSignature(datagram []byte, secretKey []byte) []byte {
-
-    dataWithoutSignature := datagram[:len(datagram)-32]
+func GenerateSignature(data []byte, secretKey []byte) []byte {
+    // Remove the signature from the datagram
+    dataWithoutSignature := data[:len(data)-32]
 
     // Concatenate data and secret
     preimage := append(dataWithoutSignature, secretKey...)
