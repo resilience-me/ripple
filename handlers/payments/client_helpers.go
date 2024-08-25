@@ -14,7 +14,7 @@ func serializePaymentDetails(payment *pathfinding.Payment, amount uint32) []byte
     return buffer
 }
 
-GetPaymentDetails(username string) (string, uint32, byte) {
+func GetPaymentDetails(username string) (string, uint32, byte) {
     // Use the existing Find method from PathManager to retrieve the account
     account := pathfinding.GetPathManager().Find(username)
     if account == nil || account.Payment == nil {
