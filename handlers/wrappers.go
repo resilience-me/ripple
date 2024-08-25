@@ -2,12 +2,12 @@ package handlers
 
 import "ripple/types"
 
-// Method on Datagram to prepare a new datagram using fields from the Datagram instance
-func (dg *types.Datagram) PrepareDatagram() (*types.Datagram, error) {
-    return PrepareDatagramWithoutCommand(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
+// PrepareDatagramWithDatagram calls PrepareDatagram with fields from an incoming datagram
+func PrepareDatagramWithDatagram(datagram *types.Datagram) (*types.Datagram, error) {
+    return PrepareDatagramWithoutCommand(datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername)
 }
 
-// Method on Datagram to prepare and send a new datagram using fields from the Datagram instance
-func (dg *types.Datagram) PrepareAndSendDatagram(command byte, arguments []byte) error {
-    return PrepareAndSendDatagram(command, dg.Username, dg.PeerServerAddress, dg.PeerUsername, arguments)
+// PrepareAndSendDatagramWithDatagram calls PrepareAndSendDatagram with with fields from an incoming datagram
+func PrepareAndSendDatagramWithDatagram(datagram *types.Datagram, command byte, arguments []byte) error {
+    return PrepareAndSendDatagram(command, datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, arguments)
 }
