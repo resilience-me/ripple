@@ -2,7 +2,9 @@ package tests
 
 import (
     "encoding/binary"
+    "fmt"
     "log"
+    "ripple/config"
 )
 
 func TestTrustlineUpdate() {
@@ -24,8 +26,11 @@ func TestTrustlineUpdate() {
         log.Fatalf("Failed to prepare datagram: %v", err)
     }
 
+    // Generate the server address using config package
+    serverAddress := fmt.Sprintf("%s:%d", config.GetServerAddress(), config.Port)
+
     // Send the datagram and receive the response
-    response, err := sendAndReceive("127.0.0.1:2012", data)
+    response, err := sendAndReceive(serverAddress, data)
     if err != nil {
         log.Fatalf("Failed to send and receive: %v", err)
     }
