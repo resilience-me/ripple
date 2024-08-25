@@ -4,14 +4,14 @@ import (
     "log"
 
     "ripple/comm"
-    "ripple/handlers"
+    "ripple/handler_util"
     "ripple/types"
 )
 
 // GetTrustlineIn handles fetching the inbound trustline information
 func GetTrustlineIn(session types.Session) {
     // Instantiate a DatagramHelper using the NewDatagramHelper function
-    dh := handlers.NewDatagramHelper(session.Datagram)
+    dh := handler_util.NewDatagramHelper(session.Datagram)
 
     // Fetch the inbound trustline using DatagramHelper
     trustline, err := dh.GetTrustlineIn()
