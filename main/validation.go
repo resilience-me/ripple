@@ -12,6 +12,19 @@ var (
 	ErrSignatureVerificationFailed = errors.New("signature verification failed")
 )
 
+// validatePeerExists checks for the existence of user and peer directories
+// It returns an error message string (empty if successful) and an error object for detailed information if an error occurs.
+func validatePeerExists(dg *types.Datagram) (string, error) {
+	exists, err := database.CheckPeerExists(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
+	if err != nil {
+		return "Error checking peer existence", fmt.Errorf("error checking peer existence for server '%s' and user '%s': %v", dg.PeerServerAddress, dg.PeerUsername, err)
+	} else if !exists {
+		return "Peer account does not exist", fmt.Errorf("peer directory does not exist for server '%s' and user '%s'", dg.PeerServerAddress, dg.PeerUsername)
+	}
+
+	return "", nil // No error, directories exist
+}
+
 // validateAndIncrementClientCounter checks if the datagram's counter is valid by comparing it to the last known counter for client connections.
 // If valid, it sets the counter to the value in the datagram to prevent replay attacks.
 func validateAndIncrementClientCounter(datagram *types.Datagram) error {
@@ -42,20 +55,6 @@ func validateAndIncrementServerCounter(datagram *types.Datagram) error {
 		return fmt.Errorf("failed to set in-counter: %v", err)
 	}
 	return nil
-}
-
-
-// ValidatePeerExists checks for the existence of user and peer directories
-// It returns an error message string (empty if successful) and an error object for detailed information if an error occurs.
-func ValidatePeerExists(dg *types.Datagram) (string, error) {
-	exists, err := database.CheckPeerExists(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
-	if err != nil {
-		return "Error checking peer existence", fmt.Errorf("error checking peer existence for server '%s' and user '%s': %v", dg.PeerServerAddress, dg.PeerUsername, err)
-	} else if !exists {
-		return "Peer account does not exist", fmt.Errorf("peer directory does not exist for server '%s' and user '%s'", dg.PeerServerAddress, dg.PeerUsername)
-	}
-
-	return "", nil // No error, directories exist
 }
 
 // validateClientDatagram validates the client datagram and checks the counter
