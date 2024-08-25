@@ -13,11 +13,15 @@ func SerializeDatagram(dg *Datagram) ([]byte, error) {
     copy(data[33:], dg.PeerUsername)
     copy(data[65:], dg.PeerServerAddress)
 
+    // Copy Arguments (assuming Arguments is located at offset 357 and is 4 bytes long)
+    copy(data[357:], dg.Arguments[:])
+
     // Write the Counter
     binary.BigEndian.PutUint32(data[353:], dg.Counter)
 
     return data, nil
 }
+
 
 func DeserializeDatagram(buf []byte) *Datagram {
     // Assuming buf is already confirmed to be of the correct length
