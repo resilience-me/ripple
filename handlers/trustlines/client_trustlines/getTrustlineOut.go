@@ -13,7 +13,7 @@ func GetTrustlineOut(session types.Session) {
     datagram := session.Datagram
 
     // Fetch the outbound trustline
-    trustline, err := db_trustlines.GetTrustlineOutFromDatagram(datagram)
+    trustline, err := db_trustlines.GetTrustlineOutWithDatagram(datagram)
     if err != nil {
         log.Printf("Error reading outbound trustline for user %s: %v", datagram.Username, err)
         comm.SendErrorResponse(session.Addr, "Error reading outbound trustline.")
