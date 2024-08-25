@@ -5,8 +5,8 @@ import (
 	"ripple/comm"
 )
 
-// SignAndSendDatagram signs a datagram and sends it over the network with the standard importance (5 retries).
-func (dh DatagramHelper) SignAndSendDatagram(peerServerAddress string) error {
+// SignAndSend signs a datagram and sends it over the network with the standard importance (5 retries).
+func (dh DatagramHelper) SignAndSend(peerServerAddress string) error {
 	// Create the signed datagram
 	serializedData, err := dh.SignDatagram(peerServerAddress)
 	if err != nil {
@@ -21,8 +21,8 @@ func (dh DatagramHelper) SignAndSendDatagram(peerServerAddress string) error {
 	return nil // Successfully signed and sent
 }
 
-// SignAndSendPriorityDatagram signs a datagram and sends it over the network with priority importance (12 retries).
-func (dh DatagramHelper) SignAndSendPriorityDatagram(peerServerAddress string) error {
+// SignAndSendPriority signs a datagram and sends it over the network with priority importance (12 retries).
+func (dh DatagramHelper) SignAndSendPriority(peerServerAddress string) error {
 	// Create the signed datagram
 	serializedData, err := dh.SignDatagram(peerServerAddress)
 	if err != nil {
