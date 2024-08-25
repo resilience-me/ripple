@@ -16,9 +16,6 @@ func GetPayment(session types.Session) {
 
     // Retrieve and serialize payment details using the wrapper method
     paymentDetails := payments.FetchAndSerializePaymentDetails(username)
-    if paymentDetails == nil {
-        paymentDetails = []byte{}  // Send an empty response if no payment details
-    }
 
     // Send the payment details as a success response
     if err := comm.SendSuccessResponse(session.Addr, paymentDetails); err != nil {
