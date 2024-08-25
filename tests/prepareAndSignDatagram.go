@@ -7,7 +7,7 @@ import (
 )
 
 // prepareAndSignDatagram prepares a datagram based on the provided parameters and signs it.
-func PrepareAndSignDatagram(username, peerUsername, peerServerAddress string, command byte, counter uint32, arguments []byte) ([]byte, error) {
+func prepareAndSignDatagram(username, peerUsername, peerServerAddress string, command byte, counter uint32, arguments []byte) ([]byte, error) {
     dg := &types.Datagram{
         Command:           command,
         Username:          username,
