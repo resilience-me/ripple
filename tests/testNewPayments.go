@@ -20,10 +20,10 @@ func TestNewPayments() {
     receiverCounter := uint32(1)
 
     // Setup accounts with initial balances
-    if err := testutil.SetupAccount(senderUsername, receiverUsername, senderServerAddress, "sendersecretkey1234567890abcdef"); err != nil {
+    if err := SetupAccount(senderUsername, receiverUsername, senderServerAddress, "sendersecretkey1234567890abcdef"); err != nil {
         log.Fatalf("Failed to set up sender account: %v", err)
     }
-    if err := testutil.SetupAccount(receiverUsername, senderUsername, receiverServerAddress, "receiversecretkey1234567890abcdef"); err != nil {
+    if err := SetupAccount(receiverUsername, senderUsername, receiverServerAddress, "receiversecretkey1234567890abcdef"); err != nil {
         log.Fatalf("Failed to set up receiver account: %v", err)
     }
 
