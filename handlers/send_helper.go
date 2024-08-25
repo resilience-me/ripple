@@ -2,13 +2,15 @@ package handlers
 
 import (
 	"fmt"
+	"ripple/auth"
 	"ripple/comm"
+	"ripple/types"
 )
 
-// SignAndSend signs a datagram and sends it over the network with the standard importance (5 retries).
-func (dh DatagramHelper) SignAndSend(peerServerAddress string) error {
+// SignAndSendDatagram signs a datagram and sends it over the network with the standard importance (5 retries).
+func SignAndSendDatagram(dg *types.Datagram, peerServerAddress string) error {
 	// Create the signed datagram
-	serializedData, err := dh.Sign(peerServerAddress)
+	serializedData, err := auth.SignDatagram(dg, peerServerAddress)
 	if err != nil {
 		return fmt.Errorf("failed to create signed datagram: %w", err)
 	}
@@ -21,10 +23,10 @@ func (dh DatagramHelper) SignAndSend(peerServerAddress string) error {
 	return nil // Successfully signed and sent
 }
 
-// SignAndSendPriority signs a datagram and sends it over the network with priority importance (12 retries).
-func (dh DatagramHelper) SignAndSendPriority(peerServerAddress string) error {
+// SignAndSendPriorityDatagram signs a datagram and sends it over the network with priority importance (12 retries).
+func SignAndSendPriorityDatagram(dg *types.Datagram, peerServerAddress string) error {
 	// Create the signed datagram
-	serializedData, err := dh.Sign(peerServerAddress)
+	serializedData, err := auth.SignDatagram(dg, peerServerAddress)
 	if err != nil {
 		return fmt.Errorf("failed to create signed datagram: %w", err)
 	}
