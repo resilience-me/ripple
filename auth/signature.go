@@ -19,13 +19,13 @@ func loadServerSecretKeyOut(dg *types.Datagram, peerServerAddress string) ([]byt
     return database.LoadPeerSecretKey(dg.PeerUsername, peerServerAddress, dg.Username)
 }
 
-// generateSignature generates a SHA-256 hash for the given datagram using the provided key.
-func generateSignature(datagram []byte, secretKey []byte) []byte {
+// GenerateSignature generates a SHA-256 hash for the given datagram using the provided key.
+func GenerateSignature(datagram []byte, secretKey []byte) []byte {
 
-    datagramWithoutSignatureField := datagram[:len(datagram)-32]
+    dataWithoutSignature := datagram[:len(datagram)-32]
 
     // Concatenate data and secret
-    preimage := append(datagramWithoutSignatureField, secretKey...)
+    preimage := append(dataWithoutSignature, secretKey...)
 
     // Compute the SHA-256 hash
     hash := sha256.Sum256(preimage)
@@ -34,17 +34,13 @@ func generateSignature(datagram []byte, secretKey []byte) []byte {
     return hash[:]
 }
 
-// verifySignature checks the integrity of the received buffer
-func verifySignature(buf []byte, key []byte) bool {
+// VerifySignature checks the integrity of the received buffer
+func VerifySignature(data []byte, key []byte) bool {
     // The signature is the last 32 bytes of the buffer
-    data := buf[:len(buf)-32]
-    signature := buf[len(buf)-32:]
+    signature := data[len(data)-32:]
 
-    // Concatenate data and key
-    preimage := append(data, key...)
-
-    // Compute the SHA-256 hash
-    hash := sha256.Sum256(preimage)
+    // Generate the expected signature using the GenerateSignature method
+    hash := generateSignature(data, key)
 
     // Compare the computed hash with the signature directly using bytes.Equal
     return bytes.Equal(signature, hash[:])
