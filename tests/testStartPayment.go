@@ -3,22 +3,30 @@ package tests
 import (
     "fmt"
     "log"
-    "ripple/commands"
+    "ripple/config"
 )
 
 func TestStartPayment() {
+    // Set the parameters for the test
     senderUsername := "testsender"
     receiverUsername := "testreceiver"
     senderServerAddress := "127.0.0.1"
     receiverServerAddress := "127.0.0.1"
-    sharedSecretKey := "sharedsecretkey1234567890abcdef"
-    trustlineAmount := uint32(1000)
     paymentAmount := uint32(500)
     senderCounter := uint32(1)
     receiverCounter := uint32(1)
+    sharedSecretKey := "sharedsecretkey1234567890abcdef" // Shared secret key for the peers
 
-    // Set up the peer relationship and trustlines
-    if err := SetupPeersAndTrustlines(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, sharedSecretKey, trustlineAmount); err != nil {
+    // Setup accounts with initial balances and secret keys
+    if err := SetupAccount(senderUsername, receiverUsername, senderServerAddress, "sendersecretkey1234567890abcdef"); err != nil {
+        log.Fatalf("Failed to set up sender account: %v", err)
+    }
+    if err := SetupAccount(receiverUsername, senderUsername, receiverServerAddress, "receiversecretkey1234567890abcdef"); err != nil {
+        log.Fatalf("Failed to set up receiver account: %v", err)
+    }
+
+    // Set up trustlines between sender and receiver
+    if err := setupPeersAndTrustlines(senderUsername, receiverUsername, senderServerAddress, paymentAmount, sharedSecretKey); err != nil {
         log.Fatalf("Failed to set up peers and trustlines: %v", err)
     }
 
@@ -26,9 +34,9 @@ func TestStartPayment() {
     serverAddress := fmt.Sprintf("127.0.0.1:%d", config.Port)
     log.Printf("Using server address: %s", serverAddress)
 
-    // Initiate the payment process
+    // Initiate payment for both sender and receiver
     if err := initiatePayment(senderUsername, receiverUsername, senderServerAddress, receiverServerAddress, serverAddress, paymentAmount, senderCounter, receiverCounter); err != nil {
-        log.Fatalf("Payment initiation failed: %v", err)
+        log.Fatalf("Failed to initiate payment: %v", err)
     }
 
     // **3. Start the Payment (ClientPayments_StartPayment)**
