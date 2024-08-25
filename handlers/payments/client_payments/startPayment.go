@@ -4,7 +4,6 @@ import (
     "log"
     "ripple/comm"
     "ripple/handlers/payments/payment_operations"
-    "ripple/pathfinding"
     "ripple/types"
 )
 
