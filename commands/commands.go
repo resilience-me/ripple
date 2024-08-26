@@ -37,3 +37,8 @@ var commandNames = [256]string{
     131: "ServerPayments_PathRecurse",
     // Other indices are empty strings by default
 }
+
+// GetCommandName returns the name of the command for a given byte value.
+func GetCommandName(command byte) string {
+    return commandNames[command]
+}
