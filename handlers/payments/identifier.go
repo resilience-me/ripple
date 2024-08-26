@@ -24,9 +24,8 @@ func generatePaymentIdentifier(dg *types.Datagram, inOrOut byte) string {
     preimage = append(user, peer...)
   }
   preimage = append(preimage, dg.Arguments[:8]...)
-  hash := sha256.Sum256(preimage)
   
-  return hash
+  return sha256.Sum256(preimage)
 }
 
 
