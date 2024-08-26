@@ -14,7 +14,7 @@ func PathRecurse(session types.Session) {
     datagram := session.Datagram
 
     // Inline extraction of the path identifier and depth from datagram arguments
-    pathIdentifier := types.BytesToString(datagram.Arguments[:32]) // Assuming identifier is in the first 32 bytes
+    pathIdentifier := types.BytesToArray32(datagram.Arguments[:32]) // Assuming identifier is in the first 32 bytes
     incomingDepth := types.BytesToUint32(datagram.Arguments[32:36]) // Assuming depth is in bytes 32-36
 
     // Find the account using the username from the datagram
