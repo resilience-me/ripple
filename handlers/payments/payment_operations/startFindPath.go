@@ -8,7 +8,7 @@ import (
 )
 
 // StartFindPath initiates a pathfinding request to all connected peers.
-func StartFindPath(username, identifier [32]byte, amount uint32, inOrOut byte) {
+func StartFindPath(username string, identifier [32]byte, amount uint32, inOrOut byte) {
     // Retrieve the list of connected peers
     peers, err := pathfinding.GetPeers(username)
     if err != nil {
