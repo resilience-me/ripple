@@ -31,14 +31,14 @@ func getPaymentAndPath(username string) (*pathfinding.Payment, *pathfinding.Path
     // Find the Path using the identifier in the Payment
     path := account.Find(paymentDetails.Identifier)
     if path == nil {
-        return paymentDetails, nil, fmt.Errorf("no path found for payment with identifier: %d", paymentDetails.Identifier)
+        return paymentDetails, nil, fmt.Errorf("no path found for payment with identifier: %x", paymentDetails.Identifier)
     }
 
     return paymentDetails, path, nil
 }
 
 // GetPaymentDetails retrieves payment identifier, amount, and direction.
-func GetPaymentDetails(username string) (string, uint32, byte, error) {
+func GetPaymentDetails(username string) ([32]byte, uint32, byte, error) {
     payment, path, err := getPaymentAndPath(username)
     if err != nil {
         // More verbose error handling here
