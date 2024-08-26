@@ -7,6 +7,15 @@ import (
     "ripple/pathfinding"
 )
 
+// DeterminePathDirection determines whether a path is incoming or outgoing
+func DeterminePathDirection(path *pathfinding.Path) byte {
+    if path.Incoming != (pathfinding.PeerAccount{}) {
+        return types.Incoming
+    } else if path.Outgoing != (pathfinding.PeerAccount{}) {
+        return types.Outgoing
+    }
+}
+
 // GetRecursePeer determines the target peer based on the populated fields in the Path.
 func GetRecursePeer(path *pathfinding.Path) (pathfinding.PeerAccount, error) {
     if path.Outgoing.Username != "" {
