@@ -5,6 +5,7 @@ import (
 	"sync"
 	"ripple/auth"
 	"ripple/comm"
+	"ripple/commands"
 	"ripple/types"
 )
 
@@ -87,6 +88,8 @@ func (sm *SessionManager) handleSession(session *types.Session) {
 		log.Printf("Unknown command: %d\n", command)
 		return
 	}
-	
+
+	log.Printf("Running command handler for: %s\n", commands.GetCommandName(command))
+
 	handler(*session)
 }
