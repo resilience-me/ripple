@@ -11,6 +11,11 @@ func ReverseDirection(inOrOut byte) {
     return inOrOut^1
 }
 
+// CheckPathFound checks if both incoming and outgoing peers are set in the path, indicating a complete path.
+func CheckPathFound(path *pathfinding.Path) bool {
+    return path.Incoming != (pathfinding.PeerAccount{}) && path.Outgoing != (pathfinding.PeerAccount{})
+}
+
 // DeterminePathDirection determines whether a path is incoming or outgoing
 func DeterminePathDirection(path *pathfinding.Path) byte {
     if path.Incoming != (pathfinding.PeerAccount{}) {
@@ -31,11 +36,6 @@ func GetRecursePeer(path *pathfinding.Path) (pathfinding.PeerAccount, error) {
     }
 
     return pathfinding.PeerAccount{}, fmt.Errorf("Unable to determine direction for path, both Incoming and Outgoing are empty")
-}
-
-// CheckPathFound checks if both incoming and outgoing peers are set in the path, indicating a complete path.
-func CheckPathFound(path *pathfinding.Path) bool {
-    return path.Incoming != (pathfinding.PeerAccount{}) && path.Outgoing != (pathfinding.PeerAccount{})
 }
 
 // GetFindPathCommand returns the appropriate command based on the inOrOut parameter.
