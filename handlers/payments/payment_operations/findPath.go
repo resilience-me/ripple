@@ -40,7 +40,7 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
         } else {
             path = account.Add(pathIdentifier, pathAmount, pathfinding.PeerAccount{}, newPeer)
         }
-        log.Printf("Initialized new path for identifier: %s with amount: %d", pathIdentifier, pathAmount)
+        log.Printf("Initialized new path for identifier: %x with amount: %d", pathIdentifier, pathAmount)
 
         // Send a PathFindingRecurse back to the appropriate peer
         PathRecurse(datagram, newPeer, 0)
