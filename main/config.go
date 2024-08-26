@@ -35,8 +35,8 @@ func setupLogger() error {
     return nil
 }
 
-// InitConfig initializes the configuration by setting up the logger and loading the server address.
-func InitConfig() error {
+// initConfig initializes the configuration by setting up the logger and loading the server address.
+func initConfig() error {
     if err := setupLogger(); err != nil {
         return fmt.Errorf("initializing logger: %w", err)
     }
