@@ -51,7 +51,7 @@ func PathRecurse(session types.Session) {
 
     // Check if both incoming and outgoing are set, indicating a path has already been found
     if payments.CheckPathFound(path) {
-        log.Printf("Path already found for path %s, ignoring recurse", pathIdentifier)
+        log.Printf("Path already found for path %x, ignoring recurse", pathIdentifier)
         return
     }
     // Determine the direction based on which peer account is populated in the Path
