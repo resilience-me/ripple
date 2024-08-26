@@ -11,7 +11,7 @@ func concatNameAndServer(username, serverAddress string) []byte {
   return append(types.PadStringTo32Bytes(username), types.PadStringTo32Bytes(serverAddress)...)
 }
 
-func generatePaymentIdentifier(dg *types.Datagram, inOrOut byte) string {
+func generatePaymentIdentifier(dg *types.Datagram, inOrOut byte) [32]byte {
   user := concatNameAndServer(dg.Username, config.GetServerAddress())
   peer := concatNameAndServer(dg.PeerUsername, dg.PeerServerAddress)
   
