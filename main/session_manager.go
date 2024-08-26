@@ -69,27 +69,28 @@ func (sm *SessionManager) handleSession(session *types.Session) {
 
 	defer sm.CloseSession(username)
 
-	// Handle the session here (processing logic)
+	// Log the start of session handling
 	log.Printf("Handling session for user: %s\n", username)
 
-
-	// If this is a client connection, check that peer account exists
-	// But only if the command included a peer.
+	// Validate peer existence for client commands with a peer username
 	if command&0x80 == 0 && datagram.PeerUsername != "" { // Bit 7 (MSB) is 0
-	    if errorMessage, err := auth.ValidatePeerExists(datagram); err != nil {
-	        log.Printf("Error validating peer existence for user %s: %v", username, err)
-	        comm.SendErrorResponse(session.Addr, errorMessage)
-	        return
-	    }
+		if errorMessage, err := auth.ValidatePeerExists(datagram); err != nil {
+			log.Printf("Error validating peer existence for user %s: %v", username, err)
+			comm.SendErrorResponse(session.Addr, errorMessage)
+			return
+		}
 	}
 	
+	// Get the command handler
 	handler := commandHandlers[command]
 	if handler == nil {
 		log.Printf("Unknown command: %d\n", command)
 		return
 	}
-
+	
+	// Log the command being handled
 	log.Printf("Running command handler for: %s\n", commands.GetCommandName(command))
-
+	
+	// Execute the command handler
 	handler(*session)
 }
