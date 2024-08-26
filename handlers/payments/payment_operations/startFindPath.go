@@ -8,7 +8,7 @@ import (
 )
 
 // StartFindPath initiates a pathfinding request to all connected peers.
-func StartFindPath(username, identifier string, amount uint32, inOrOut byte) {
+func StartFindPath(username, identifier [32]byte, amount uint32, inOrOut byte) {
     // Retrieve the list of connected peers
     peers, err := pathfinding.GetPeers(username)
     if err != nil {
@@ -16,7 +16,7 @@ func StartFindPath(username, identifier string, amount uint32, inOrOut byte) {
         return
     }
 
-    arguments := append([]byte(identifier), types.Uint32ToBytes(amount)...)
+    arguments := append(identifier[:], types.Uint32ToBytes(amount)...)
     command := payments.GetFindPathCommand(inOrOut)
 
     for _, peer := range peers {
