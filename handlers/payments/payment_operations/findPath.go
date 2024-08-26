@@ -2,6 +2,7 @@ package payment_operations
 
 import (
     "log"
+    "ripple/handlers/payments"
     "ripple/pathfinding"
     "ripple/types"
 )
@@ -45,6 +46,20 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
         // Send a PathFindingRecurse back to the appropriate peer
         PathRecurse(datagram, newPeer, 0)
         return
+    }
+
+    // Check if a Payment is already associated with this account and identifier
+    if account.Payment != nil && account.Payment.Identifier == pathIdentifier {
+        
+    }
+    if payments.CheckPathFound(path) {
+        log.Printf("Path already found for path %x, ignoring find path command", pathIdentifier)
+        return
+    }
+
+    pathDirection := payments.DeterminePathDirection(path)
+    if pathDirection == payments.ReverseDirection(inOrOut) {
+        log.Printf("Path found for %x", pathIdentifier)
     }
 
     // If the path is already present, forward the PathFinding request to peers
