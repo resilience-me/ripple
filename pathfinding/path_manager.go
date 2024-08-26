@@ -64,14 +64,14 @@ func (pm *PathManager) Cleanup() {
 }
 
 // Add creates and adds a new Path to an Account and returns it.
-func (account *Account) Add(identifier string, amount uint32, incoming, outgoing PeerAccount) *Path {
+func (account *Account) Add(identifier [32]byte, amount uint32, incoming, outgoing PeerAccount) *Path {
     newPath := NewPath(identifier, amount, incoming, outgoing)
     account.Paths[identifier] = newPath
     return newPath
 }
 
 // Find retrieves a Path from an Account using the identifier.
-func (account *Account) Find(identifier string) *Path {
+func (account *Account) Find(identifier [32]byte) *Path {
     if path, exists := account.Paths[identifier]; exists {
         return path
     }
@@ -79,7 +79,7 @@ func (account *Account) Find(identifier string) *Path {
 }
 
 // Remove deletes a Path from an Account using the identifier.
-func (account *Account) Remove(identifier string) {
+func (account *Account) Remove(identifier [32]byte) {
     delete(account.Paths, identifier)
 }
 
