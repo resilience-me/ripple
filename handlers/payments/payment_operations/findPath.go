@@ -48,6 +48,6 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
     }
 
     // If the path is already present, forward the PathFinding request to peers
-    log.Printf("Path already exists for identifier %s, forwarding to peers", pathIdentifier)
+    log.Printf("Path already exists for identifier %x, forwarding to peers", pathIdentifier)
     ForwardFindPath(datagram, inOrOut)
 }
