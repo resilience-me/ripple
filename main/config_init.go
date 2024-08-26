@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "log"
+    "os"
     "path/filepath"
     "ripple/config"
     "ripple/database"
