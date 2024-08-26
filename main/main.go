@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	if err := config.InitConfig(); err != nil {
+	if err := config.initConfig(); err != nil {
 		log.Fatalf("Configuration failed: %v", err)
 	}
 
