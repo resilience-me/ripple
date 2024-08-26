@@ -50,8 +50,15 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
 
     // Check if a Payment is already associated with this account and identifier
     if account.Payment != nil && account.Payment.Identifier == pathIdentifier {
-        
+        if account.Payment.InOrOut == inOrOut {
+            log.Printf("Path with identifier %x has looped, ignore find path command", pathIdentifier)
+            return
+        }
+        log.Printf("Destination reached for path with identifier %x. ", pathIdentifier)
+        // Todo: add logic for destination reached
+        return
     }
+    
     if payments.CheckPathFound(path) {
         log.Printf("Path already found for path %x, ignoring find path command", pathIdentifier)
         return
@@ -60,6 +67,8 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
     pathDirection := payments.DeterminePathDirection(path)
     if pathDirection == payments.ReverseDirection(inOrOut) {
         log.Printf("Path found for %x", pathIdentifier)
+        // Todo: add logic for path found
+        return
     }
 
     // If the path is already present, forward the PathFinding request to peers
