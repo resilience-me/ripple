@@ -1,34 +1,29 @@
-package config
+package main
 
 import (
     "fmt"
     "log"
-    "os"
-    "io/ioutil"
     "path/filepath"
-    "time"
-    "strings"
+    "ripple/config"
+    "ripple/database"
 )
 
-// loadServerAddress reads the server address from the configuration file.
+// loadServerAddress reads the server address from the configuration file using database.ReadFile.
 func loadServerAddress() error {
-    addressPath := filepath.Join(datadir, "server_address.txt")
-    addressBytes, err := ioutil.ReadFile(addressPath)
+    addressBytes, err := database.ReadFile(config.GetDataDir(), "server_address.txt")
     if err != nil {
-        return fmt.Errorf("error loading server address from %s: %w", addressPath, err)
+        return fmt.Errorf("failed to load server address: %w", err)
     }
-    
-    // Remove trailing newlines that might be added by text editors
-    serverAddress = strings.TrimSpace(string(addressBytes))
-    
-    log.Printf("Loaded server address: %s", serverAddress) // Log that the address was loaded
+
+    config.SetServerAddress(string(addressBytes))
+    log.Printf("Loaded server address: %s", config.GetServerAddress()) // Log that the address was loaded
     return nil
 }
 
 // setupLogger initializes the logging configuration.
 func setupLogger() error {
     // Construct the full path to the log file
-    logFilePath := filepath.Join(datadir, "ripple.log")
+    logFilePath := filepath.Join(config.GetDataDir(), "ripple.log")
 
     logFile, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
     if err != nil {
