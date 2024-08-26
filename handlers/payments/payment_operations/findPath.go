@@ -14,7 +14,7 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
     pathAmount := types.BytesToUint32(datagram.Arguments[32:36])
 
     // Check if the trustline (incoming or outgoing) is sufficient for the path amount
-    sufficient, err := CheckTrustlineSufficient(datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, pathAmount, inOrOut)
+    sufficient, err := CheckTrustlineSufficient(datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, pathAmount, payments.ReverseDirection(inOrOut))
     if err != nil {
         log.Printf("Error checking trustline: %v", err)
         return
