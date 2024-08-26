@@ -7,7 +7,7 @@ import (
     "ripple/pathfinding"
 )
 
-func ReverseDirection(inOrOut byte) {
+func ReverseDirection(inOrOut byte) byte {
     return inOrOut^1
 }
 
