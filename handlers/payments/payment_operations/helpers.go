@@ -9,7 +9,7 @@ import (
 // CheckTrustlineSufficient checks if the trustline (either incoming or outgoing) is sufficient for the given amount.
 func CheckTrustlineSufficient(username, peerServerAddress, peerUsername string, amount uint32, inOrOut byte) (bool, error) {
     // Get the relevant trustline
-    trustline, err := db_trustlines.GetTrustline(username, peerServerAddress, peerUsername, inOrOut^1)
+    trustline, err := db_trustlines.GetTrustline(username, peerServerAddress, peerUsername, inOrOut)
     if err != nil {
         return false, fmt.Errorf("failed to retrieve trustline: %v", err)
     }
