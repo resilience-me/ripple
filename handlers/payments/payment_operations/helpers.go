@@ -4,12 +4,13 @@ import (
     "fmt"
     "ripple/database/db_trustlines"
     "ripple/handler_util"
+    "ripple/handlers/payments"
 )
 
 // CheckTrustlineSufficient checks if the trustline (either incoming or outgoing) is sufficient for the given amount.
 func CheckTrustlineSufficient(username, peerServerAddress, peerUsername string, amount uint32, inOrOut byte) (bool, error) {
     // Get the relevant trustline
-    trustline, err := db_trustlines.GetTrustline(username, peerServerAddress, peerUsername, inOrOut)
+    trustline, err := db_trustlines.GetTrustline(username, peerServerAddress, peerUsername, payments.ReverseDirection(inOrOut))
     if err != nil {
         return false, fmt.Errorf("failed to retrieve trustline: %v", err)
     }
