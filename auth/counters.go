@@ -7,7 +7,7 @@ import (
 )
 
 // GetAndIncrementCounterOut retrieves the current counter_out, increments it, and updates the database.
-// It returns the counter value before it was incremented.
+// It returns the new counter value after it has been incremented.
 func GetAndIncrementCounterOut(username, peerServerAddress, peerUsername string) (uint32, error) {
     // Retrieve the current value of counter_out from the database.
     counterOut, err := database.GetCounterOut(username, peerServerAddress, peerUsername)
@@ -15,12 +15,15 @@ func GetAndIncrementCounterOut(username, peerServerAddress, peerUsername string)
         return 0, err  // Return error if unable to fetch the counter.
     }
 
-    // Increment the counter and update it in the database within the same function call.
-    if err := database.SetCounterOut(username, peerServerAddress, peerUsername, counterOut+1); err != nil {
+    // Increment the counter.
+    counterOut++  // Increment the counter value by 1
+
+    // Update the database with the new counter value.
+    if err := database.SetCounterOut(username, peerServerAddress, peerUsername, counterOut); err != nil {
         return 0, err  // Return error if unable to update the counter.
     }
 
-    // Return the original counter value that was fetched.
+    // Return the updated counter value.
     return counterOut, nil
 }
 
