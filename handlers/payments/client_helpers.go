@@ -42,7 +42,7 @@ func GetPaymentDetails(username string) ([32]byte, uint32, byte, error) {
     payment, path, err := getPaymentAndPath(username)
     if err != nil {
         // More verbose error handling here
-        return "", 0, 0, fmt.Errorf("failed to retrieve payment details for user %s: %w", username, err)
+        return [32]byte{}, 0, 0, fmt.Errorf("failed to retrieve payment details for user %s: %w", username, err)
     }
     return payment.Identifier, path.Amount, payment.InOrOut, nil
 }
