@@ -35,7 +35,7 @@ func GetRecursePeer(path *pathfinding.Path) (pathfinding.PeerAccount, error) {
 
 // CheckPathFound checks if both incoming and outgoing peers are set in the path, indicating a complete path.
 func CheckPathFound(path *pathfinding.Path) bool {
-    return path.Incoming.Username != "" && path.Outgoing.Username != ""
+    return path.Incoming != (pathfinding.PeerAccount{}) && path.Outgoing != (pathfinding.PeerAccount{})
 }
 
 // GetFindPathCommand returns the appropriate command based on the inOrOut parameter.
