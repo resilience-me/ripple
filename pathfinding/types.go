@@ -22,7 +22,7 @@ func NewPeerAccount(username, serverAddress string) PeerAccount {
 
 // Path replaces PathNode, tailored for use with a map and string identifiers
 type Path struct {
-    Identifier   string          // Identifier for the path
+    Identifier   [32]byte        // Identifier for the path
     Timeout      time.Time       // Direct expiration time for the path
     Amount       uint32
     Incoming     PeerAccount     // Details of the incoming peer
@@ -32,7 +32,7 @@ type Path struct {
 }
 
 // NewPath is a constructor for creating a Path struct based on an identifier, incoming and outgoing PeerAccount, and amount.
-func NewPath(identifier string, amount uint32, incoming, outgoing PeerAccount) *Path {
+func NewPath(identifier [32]byte, amount uint32, incoming, outgoing PeerAccount) *Path {
     return &Path{
         Identifier:   identifier,
         Timeout:      time.Now().Add(config.PathFindingTimeout), // Set the Timeout using PathFindingTimeout
@@ -46,7 +46,7 @@ func NewPath(identifier string, amount uint32, incoming, outgoing PeerAccount) *
 type Account struct {
     Username      string
     Timeout       time.Time
-    Paths         map[string]*Path // Maps string identifiers to Path.
+    Paths         map[[32]byte]*Path // Maps identifiers to Path.
     Payment       *Payment
 }
 
@@ -55,20 +55,20 @@ func NewAccount(username string) *Account {
     return &Account{
         Username: username,
         Timeout:  time.Now().Add(config.PathFindingTimeout), // Set the initial Cleanup time
-        Paths:    make(map[string]*Path),
+        Paths:    make(map[[32]byte]*Path),
     }
 }
 
 // Payment structure adapted for use with Account
 type Payment struct {
-    Identifier  string
+    Identifier  [32]byte
     Counterpart PeerAccount
     InOrOut     byte  // 0 for incoming, 1 for outgoing, stored as a single byte
     Nonce       uint32
 }
 
 // NewPayment is a constructor for creating a Payment struct based on an identifier, datagram, and inOrOut value.
-func NewPayment(datagram *types.Datagram, identifier string, inOrOut byte, nonce uint32) *Payment {
+func NewPayment(datagram *types.Datagram, identifier [32]byte, inOrOut byte, nonce uint32) *Payment {
     // Initialize and return the Payment struct, using NewPeerAccount for the Counterpart field
     return &Payment{
         Identifier: identifier,
