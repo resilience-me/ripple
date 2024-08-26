@@ -20,9 +20,8 @@ func CheckPathFound(path *pathfinding.Path) bool {
 func DeterminePathDirection(path *pathfinding.Path) byte {
     if path.Incoming != (pathfinding.PeerAccount{}) {
         return types.Incoming
-    } else if path.Outgoing != (pathfinding.PeerAccount{}) {
-        return types.Outgoing
     }
+    return types.Outgoing
 }
 
 // GetRecursePeer determines the target peer based on the populated fields in the Path.
