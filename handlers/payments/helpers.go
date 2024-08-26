@@ -7,6 +7,10 @@ import (
     "ripple/pathfinding"
 )
 
+func ReverseDirection(inOrOut byte) {
+    return inOrOut^1
+}
+
 // DeterminePathDirection determines whether a path is incoming or outgoing
 func DeterminePathDirection(path *pathfinding.Path) byte {
     if path.Incoming != (pathfinding.PeerAccount{}) {
