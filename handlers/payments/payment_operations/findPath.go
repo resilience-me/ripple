@@ -1,7 +1,6 @@
 package payment_operations
 
 import (
-    "encoding/binary"
     "log"
     "ripple/pathfinding"
     "ripple/types"
