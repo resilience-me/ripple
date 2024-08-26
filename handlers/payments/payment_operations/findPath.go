@@ -55,7 +55,7 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
             return
         }
         log.Printf("Destination reached for path with identifier %x. ", pathIdentifier)
-        // Todo: add logic for destination reached
+        // Todo: add logic for destination reached, a PathFound command that will be sent towards the buyer
         return
     }
     
@@ -67,7 +67,7 @@ func FindPath(datagram *types.Datagram, inOrOut byte) {
     pathDirection := payments.DeterminePathDirection(path)
     if pathDirection == payments.ReverseDirection(inOrOut) {
         log.Printf("Path found for %x", pathIdentifier)
-        // Todo: add logic for path found
+        // Todo: add logic for path found, a PathFound command that will be sent towards the buyer
         return
     }
 
