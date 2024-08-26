@@ -11,7 +11,7 @@ import (
 func FindPath(datagram *types.Datagram, inOrOut byte) {
     // Extract the path identifier and amount from datagram arguments
     pathIdentifier := types.BytesToString(datagram.Arguments[:32])
-    pathAmount := binary.BigEndian.Uint32(datagram.Arguments[32:36])
+    pathAmount := types.BytesToUint32(datagram.Arguments[32:36])
 
     // Check if the trustline (incoming or outgoing) is sufficient for the path amount
     sufficient, err := CheckTrustlineSufficient(datagram.Username, datagram.PeerServerAddress, datagram.PeerUsername, pathAmount, inOrOut)
