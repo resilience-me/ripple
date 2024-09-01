@@ -5,14 +5,13 @@ import (
 	"sync"
 	"ripple/auth"
 	"ripple/comm"
-	"ripple/commands"
-	"ripple/types"
+	"ripple/datagram_util"
 )
 
 // SessionManager manages sessions and their state
 type SessionManager struct {
 	activeHandlers map[string]bool
-	queues         map[string][]*types.Session
+	queues         map[string][]*datagram_util.Session
 	mu             sync.Mutex
 	wg             sync.WaitGroup
 }
@@ -21,12 +20,12 @@ type SessionManager struct {
 func NewSessionManager() *SessionManager {
 	return &SessionManager{
 		activeHandlers: make(map[string]bool),
-		queues:         make(map[string][]*types.Session),
+		queues:         make(map[string][]*datagram_util.Session),
 	}
 }
 
 // RouteSession routes a new session or queues it if a handler is already active
-func (sm *SessionManager) RouteSession(session *types.Session) {
+func (sm *SessionManager) RouteSession(session *datagram_util.Session) {
 	sm.mu.Lock()
 	defer sm.mu.Unlock()
 
@@ -81,7 +80,7 @@ func (sm *SessionManager) handleSession(session *datagram_util.Session) {
 			}
 		}
 		dispatchClientHandler(session)
-	} else {
+	} else { // Server command
 		dispatchServerHandler(datagram)
 	}
 }
