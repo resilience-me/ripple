@@ -2,32 +2,32 @@ package handler_util
 
 import "ripple/database"
 
-// GetCounter retrieves the counter value using the embedded Datagram to determine the directory.
+// GetCounter retrieves the client's counter.
 func (dh DatagramHelper) GetCounter() (uint32, error) {
-	return database.GetCounter(dh.Username)
+    return database.GetCounter(dh.Username)
 }
 
-// SetCounter sets the counter value using the embedded Datagram.
+// SetCounter sets the client's counter.
 func (dh DatagramHelper) SetCounter() error {
-	return database.SetCounter(dh.Username, dh.Counter)
+    return database.SetCounter(dh.Username, dh.Counter)
 }
 
-// GetCounterIn retrieves the counter_in value using the embedded Datagram to determine the directory.
+// GetCounterIn retrieves the incoming counter for a server connection.
 func (dh DatagramHelper) GetCounterIn() (uint32, error) {
-	return database.GetCounterIn(dh.Username, dh.PeerServerAddress, dh.PeerUsername)
+    return database.GetCounterIn(dh.Username, dh.PeerServerAddress, dh.PeerUsername)
 }
 
-// SetCounterIn sets the counter_in value using the embedded Datagram.
+// SetCounterIn sets the incoming counter for a server connection.
 func (dh DatagramHelper) SetCounterIn() error {
-	return database.SetCounterIn(dh.Username, dh.PeerServerAddress, dh.PeerUsername, dh.Counter)
+    return database.SetCounterIn(dh.Username, dh.PeerServerAddress, dh.PeerUsername, dh.Counter)
 }
 
-// GetCounterOut retrieves the counter_out value using the embedded Datagram to determine the directory.
+// GetCounterOut retrieves the outgoing counter for a server connection.
 func (dh DatagramHelper) GetCounterOut() (uint32, error) {
-	return database.GetCounterOut(dh.Username, dh.PeerServerAddress, dh.PeerUsername)
+    return database.GetCounterOut(dh.Username, dh.PeerServerAddress, dh.PeerUsername)
 }
 
-// SetCounterOut sets the counter_out value using the embedded Datagram.
+// SetCounterOut sets the outgoing counter for a server connection.
 func (dh DatagramHelper) SetCounterOut(value uint32) error {
-	return database.SetCounterOut(dh.Username, dh.PeerServerAddress, dh.PeerUsername, value)
+    return database.SetCounterOut(dh.Username, dh.PeerServerAddress, dh.PeerUsername, value)
 }
