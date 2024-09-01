@@ -82,6 +82,6 @@ func (sm *SessionManager) handleSession(session *datagram_util.Session) {
 		}
 		dispatchClientHandler(session)
 	} else {
-		dispatchServerHandler(session)
+		dispatchServerHandler(datagram)
 	}
 }
