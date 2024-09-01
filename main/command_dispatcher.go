@@ -26,16 +26,16 @@ func dispatchClientHandler(session *datagram_util.Session) {
 
 // dispatchServerHandler processes a server session by executing the appropriate handler.
 func dispatchServerHandler(datagram *datagram_util.Datagram) {
-
+    command := datagram.Command
     // Execute the server command handler
-    handler := serverCommandHandlers[datagram.Command&0x7F] // Mask out the MSB
+    handler := serverCommandHandlers[command&0x7F] // Mask out the MSB
     if handler == nil {
-        log.Printf("Unknown server command: %d\n", datagram.Command)
+        log.Printf("Unknown server command: %d\n", command)
         return
     }
 
     // Log the command being handled
-    log.Printf("Running server command handler for: %s\n", commands.GetCommandName(datagram.Command))
+    log.Printf("Running server command handler for: %s\n", commands.GetCommandName(command))
 
     // Call the handler
     handler(datagram)
