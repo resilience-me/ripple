@@ -1,11 +1,9 @@
 package datagram_util
 
-import (
-    "net"
-)
+import "net"
 
-// Session represents a session and includes an embedded Datagram.
+// Session is used to route datagrams and is passed to client handlers.
 type Session struct {
-    *Datagram          // Embedding Datagram directly
-    Addr      *net.UDPAddr // The UDP address associated with this session
+    *Datagram
+    Addr *net.UDPAddr
 }
