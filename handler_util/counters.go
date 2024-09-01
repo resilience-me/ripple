@@ -1,3 +1,7 @@
+package handler_util
+
+import "ripple/database"
+
 // GetCounter retrieves the counter value using the embedded Datagram to determine the directory.
 func (dh DatagramHelper) GetCounter() (uint32, error) {
 	return database.GetCounter(dh.Username)
