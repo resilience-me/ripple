@@ -25,8 +25,7 @@ func dispatchClientHandler(session *datagram_util.Session) {
 }
 
 // dispatchServerHandler processes a server session by executing the appropriate handler.
-func dispatchServerHandler(session *datagram_util.Session) {
-    datagram := session.Datagram
+func dispatchServerHandler(datagram *datagram_util.Datagram) {
 
     // Execute the server command handler
     handler := serverCommandHandlers[datagram.Command&0x7F] // Mask out the MSB
