@@ -64,7 +64,6 @@ func (sm *SessionManager) CloseSession(username string) {
 // handleSession processes a session and then triggers the next one
 func (sm *SessionManager) handleSession(session *datagram_util.Session) {
 	datagram := session.Datagram
-	command := datagram.Command
 	username := datagram.Username
 
 	defer sm.CloseSession(username)
@@ -72,7 +71,7 @@ func (sm *SessionManager) handleSession(session *datagram_util.Session) {
 	// Log the start of session handling
 	log.Printf("Handling session for user: %s\n", username)
 
-	if command&0x80 == 0 { // Client command
+	if datagram.Command&0x80 == 0 { // Client command
 		// Validate peer existence for client commands with a peer username
 		if datagram.PeerUsername != "" {
 			if errorMessage, err := auth.ValidatePeerExists(datagram); err != nil {
