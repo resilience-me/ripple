@@ -7,9 +7,9 @@ import (
 
 // GetAndIncrementCounterOut retrieves the current counter_out, increments it, and updates the database.
 // It returns the new counter value after it has been incremented.
-func (dg *Datagram) GetAndIncrementCounterOut() (uint32, error) {
+func GetAndIncrementCounterOut(username, peerServerAddress, peerUsername string) (uint32, error) {
     // Retrieve the current value of counter_out from the database.
-    counterOut, err := database.GetCounterOut(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
+    counterOut, err := database.GetCounterOut(username, peerServerAddress, peerUsername)
     if err != nil {
         return 0, err  // Return error if unable to fetch the counter.
     }
@@ -18,7 +18,7 @@ func (dg *Datagram) GetAndIncrementCounterOut() (uint32, error) {
     counterOut++  // Increment the counter value by 1
 
     // Update the database with the new counter value.
-    if err := database.SetCounterOut(dg.Username, dg.PeerServerAddress, dg.PeerUsername, counterOut); err != nil {
+    if err := database.SetCounterOut(username, peerServerAddress, peerUsername, counterOut); err != nil {
         return 0, err  // Return error if unable to update the counter.
     }
 
