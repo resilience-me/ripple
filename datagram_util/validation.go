@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"ripple/database"
+	"ripple/auth"
 )
 
 var (
@@ -31,7 +32,7 @@ func (dg *Datagram) ValidateClientDatagram(buf []byte) error {
 		return fmt.Errorf("loading client secret key failed: %w", err)
 	}
 
-	if !verifySignature(buf, secretKey) {
+	if !auth.verifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
@@ -50,7 +51,7 @@ func (dg *Datagram) ValidateServerDatagram(buf []byte) error {
 		return fmt.Errorf("loading server secret key failed: %w", err)
 	}
 
-	if !verifySignature(buf, secretKey) {
+	if !auth.verifySignature(buf, secretKey) {
 		return ErrSignatureVerificationFailed
 	}
 
