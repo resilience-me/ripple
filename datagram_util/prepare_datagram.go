@@ -5,6 +5,16 @@ import (
     "ripple/auth"
 )
 
+// PrepareDatagramWithoutCommand prepares a new datagram using the fields from the Datagram itself.
+func (dg *Datagram) PrepareDatagramWithoutCommand() (*Datagram, error) {
+    return PrepareDatagramWithoutCommand(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
+}
+
+// PrepareAndSendDatagram prepares and sends a new datagram using the fields from the Datagram itself.
+func (dg *Datagram) PrepareAndSendDatagram(command byte, arguments []byte) error {
+    return PrepareAndSendDatagram(command, dg.Username, dg.PeerServerAddress, dg.PeerUsername, arguments)
+}
+
 // PrepareDatagramWithoutCommand prepares common Datagram fields and increments counter_out.
 func PrepareDatagramWithoutCommand(username, peerServerAddress, peerUsername string) (*Datagram, error) {
     // Retrieve and increment the counter_out value
