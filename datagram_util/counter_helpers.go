@@ -5,6 +5,27 @@ import (
     "ripple/database"
 )
 
+// GetAndIncrementCounterOut retrieves the current counter_out, increments it, and updates the database.
+// It returns the new counter value after it has been incremented.
+func (dg *Datagram) GetAndIncrementCounterOut() (uint32, error) {
+    // Retrieve the current value of counter_out from the database.
+    counterOut, err := database.GetCounterOut(dg.Username, dg.PeerServerAddress, dg.PeerUsername)
+    if err != nil {
+        return 0, err  // Return error if unable to fetch the counter.
+    }
+
+    // Increment the counter.
+    counterOut++  // Increment the counter value by 1
+
+    // Update the database with the new counter value.
+    if err := database.SetCounterOut(dg.Username, dg.PeerServerAddress, dg.PeerUsername, counterOut); err != nil {
+        return 0, err  // Return error if unable to update the counter.
+    }
+
+    // Return the updated counter value.
+    return counterOut, nil
+}
+
 // ValidateAndIncrementClientCounter checks and updates the client counter.
 func (dg *Datagram) ValidateAndIncrementClientCounter() error {
     prevCounter, err := dg.GetCounter() // Retrieve the previous counter value
